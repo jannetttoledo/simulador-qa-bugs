@@ -1,653 +1,464 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enterprise Banking Core - QA & Automation Lab Ultimate</title>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Segoe+UI:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-main: #0a192f;
-            --bg-card: #112240;
-            --bg-input: #071224;
-            --accent: #64ffda;
-            --text-light: #e6f1ff;
-            --text-muted: #8892b0;
-            --success: #2ecc71;
-            --danger: #e74c3c;
-            --warning: #f1c40f;
-            --info: #00bfff;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plataforma de Entrenamiento QA v4.0 - Robust Core</title>
+<style>
+:root {
+--bg-main: #0b132b;
+--bg-card: #1c2541;
+--cyan-accent: #48cae4;
+--text-light: #ffffff;
+--text-muted: #a5a5a5;
 
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background-color: var(--bg-main);
-            color: var(--text-light);
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
+--success: #06d6a0;
+--danger: #ef476f;
+--warning: #ffd166;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva,
+Verdana, sans-serif; }
+body { background-color: var(--bg-main); color: var(--text-light); padding: 20px; }
+header { text-align: center; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px
+solid #3a506b; }
+header h1 { color: var(--cyan-accent); font-size: 26px; }
+header p { color: var(--text-muted); font-size: 14px; margin-top: 5px; }
+nav { display: flex; justify-content: center; gap: 15px; margin-bottom: 25px; }
+nav button { background-color: var(--bg-card); border: 1px solid #3a506b; color:
+var(--text-light); padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold;
+transition: 0.3s; }
+nav button.active, nav button:hover { background-color: var(--cyan-accent); color:
+var(--bg-main); border-color: var(--cyan-accent); }
+.page { display: none; animation: fadeIn 0.4s ease-in-out forwards; }
+.page.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1;
+transform: translateY(0); } }
+.grid-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media(max-width: 768px) { .grid-layout { grid-template-columns: 1fr; } }
+.card { background-color: var(--bg-card); border-radius: 8px; padding: 20px; border: 1px solid
+#2a3c5a; height: fit-content; }
+.card h2 { font-size: 18px; color: var(--cyan-accent); margin-bottom: 15px; border-bottom: 1px
+solid #2a3c5a; padding-bottom: 8px; }
+.form-group { margin-bottom: 15px; }
+.form-group label { display: block; font-size: 13px; color: var(--text-muted); margin-bottom:
+5px; }
+.form-group input, .form-group select { width: 100%; padding: 10px; border-radius: 6px; border:
+1px solid #3a506b; background-color: var(--bg-main); color: var(--text-light); font-size: 14px; }
+.form-group input:focus, .form-group select:focus { border-color: var(--cyan-accent); outline:
+none; }
+.btn-primary { width: 100%; background-color: var(--success); color: var(--bg-main);
+font-weight: bold; border: none; padding: 12px; border-radius: 6px; cursor: pointer; font-size: 15px;
+transition: 0.2s; }
+.btn-primary:hover { opacity: 0.9; }
+.datapool-buttons { display: flex; gap: 10px; margin-bottom: 15px; }
+.datapool-buttons button { flex: 1; background-color: #2a3c5a; border: none; color:
+var(--text-light); padding: 8px; border-radius: 4px; font-size: 11px; cursor: pointer; font-weight:
+bold; }
+.datapool-buttons button:hover { background-color: #3a506b; }
+.log-container { background-color: var(--bg-main); border-radius: 6px; padding: 15px;
+min-height: 250px; max-height: 400px; overflow-y: auto; font-family: monospace; font-size: 13px;
+border: 1px solid #2a3c5a; }
+.log-card { padding: 10px; border-radius: 4px; margin-bottom: 10px; border-left: 4px solid; }
+.log-card.passed { background-color: rgba(6, 214, 160, 0.1); border-left-color: var(--success);
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            flex: 1;
-            width: 100%;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 25px;
-            border-bottom: 2px solid #172a45;
-            padding-bottom: 15px;
-        }
-
-        header h1 {
-            color: var(--accent);
-            margin-bottom: 5px;
-            font-size: 24px;
-            font-family: 'JetBrains Mono', monospace;
-        }
-
-        header p {
-            color: var(--text-muted);
-            margin-top: 0;
-            font-size: 13px;
-        }
-
-        /* METRICAS */
-        .metrics-bar {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-
-        .metric-card {
-            background-color: var(--bg-card);
-            border: 1px solid #233554;
-            padding: 12px;
-            border-radius: 8px;
-            text-align: center;
-        }
-
-        .metric-card .value {
-            font-size: 22px;
-            font-weight: bold;
-            font-family: 'JetBrains Mono', monospace;
-            display: block;
-            margin-top: 5px;
-        }
-        .metric-card.total .value { color: var(--text-light); }
-        .metric-card.passed .value { color: var(--success); }
-        .metric-card.failed .value { color: var(--danger); }
-        .metric-card.auto .value { color: var(--info); }
-
-        /* ARQUITECTURA EN GRID TRIPLE */
-        .main-layout {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-        }
-
-        @media (min-width: 1200px) {
-            .main-layout {
-                grid-template-columns: 450px 1fr;
-            }
-            .right-column {
-                display: grid;
-                grid-template-rows: auto auto;
-                gap: 20px;
-            }
-        }
-
-        .card {
-            background-color: var(--bg-card);
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px -15px rgba(2,12,27,0.7);
-            border: 1px solid #233554;
-            height: fit-content;
-        }
-
-        .card h2 {
-            margin-top: 0;
-            color: #ccd6f6;
-            font-size: 16px;
-            margin-bottom: 15px;
-            border-bottom: 1px solid #1f2d4d;
-            padding-bottom: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-
-        .form-group {
-            margin-bottom: 12px;
-        }
-
-        label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 5px;
-            color: var(--text-muted);
-            font-size: 12px;
-        }
-
-        input, select {
-            width: 100%;
-            padding: 9px;
-            background-color: var(--bg-input);
-            border: 1px solid #233554;
-            border-radius: 6px;
-            color: var(--text-light);
-            box-sizing: border-box;
-            font-size: 12px;
-            font-family: 'JetBrains Mono', monospace;
-        }
-
-        input:focus, select:focus {
-            outline: none;
-            border-color: var(--accent);
-        }
-
-        .btn-submit {
-            background-color: var(--accent);
-            color: var(--bg-main);
-            border: none;
-            padding: 11px;
-            font-size: 13px;
-            font-weight: bold;
-            border-radius: 6px;
-            cursor: pointer;
-            width: 100%;
-            transition: all 0.3s ease;
-            margin-top: 5px;
-        }
-
-        .btn-submit:hover { background-color: #52d1b2; }
-
-        .qa-utilities {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 15px;
-        }
-
-        .btn-qa {
-            background-color: #172a45;
-            color: var(--accent);
-            border: 1px solid var(--accent);
-            padding: 6px 10px;
-            font-size: 10px;
-            font-weight: bold;
-            border-radius: 4px;
-            cursor: pointer;
-            flex: 1;
-        }
-
-        .btn-qa:hover { background-color: rgba(100, 255, 218, 0.1); }
-
-        /* SECCIÓN AUTOMATIZACIÓN */
-        .automation-box {
-            background-color: var(--bg-input);
-            border: 1px solid #1f2d4d;
-            border-radius: 6px;
-            padding: 10px;
-            margin-top: 15px;
-        }
-
-        .code-display {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            color: #a9b7c6;
-            white-space: pre-wrap;
-            background: #040a14;
-            padding: 8px;
-            border-radius: 4px;
-            margin-top: 5px;
-            border-left: 3px solid var(--info);
-        }
-
-        /* TABLA SQL SIMULADA */
-        .db-table-wrapper {
-            overflow-x: auto;
-            margin-top: 10px;
-        }
-
-        .db-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            text-align: left;
-        }
-
-        .db-table th {
-            background-color: #172a45;
-            color: var(--accent);
-            padding: 8px;
-            border: 1px solid #233554;
-        }
-
-        .db-table td {
-            padding: 8px;
-            border: 1px solid #233554;
-            color: var(--text-light);
-        }
-
-        /* FILTROS Y LOGS */
-        .filter-container {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 12px;
-        }
-
-        .btn-filter {
-            background: #172a45;
-            border: 1px solid #233554;
-            color: var(--text-muted);
-            padding: 4px 10px;
-            font-size: 11px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .btn-filter.active {
-            background-color: var(--accent);
-            color: var(--bg-main);
-            font-weight: bold;
-        }
-
-        .test-list {
-            max-height: 320px;
-            overflow-y: auto;
-        }
-
-        .test-item {
-            background: #172a45;
-            padding: 12px;
-            border-radius: 6px;
-            margin-bottom: 10px;
-            border-left: 5px solid var(--accent);
-        }
-        .test-item.passed { border-left-color: var(--success); }
-        .test-item.failed { border-left-color: var(--danger); }
-        .test-item.warning { border-left-color: var(--warning); }
-
-        .status-badge {
-            display: inline-block;
-            padding: 2px 5px;
-            font-size: 9px;
-            font-weight: bold;
-            border-radius: 3px;
-            margin-bottom: 5px;
-            text-transform: uppercase;
-            font-family: 'JetBrains Mono', monospace;
-        }
-        .badge-passed { background-color: rgba(46, 204, 113, 0.15); color: var(--success); }
-        .badge-failed { background-color: rgba(231, 76, 60, 0.15); color: var(--danger); }
-        .badge-warning { background-color: rgba(241, 196, 15, 0.15); color: var(--warning); }
-
-        .test-title {
-            font-weight: bold;
-            font-size: 13px;
-            color: #ccd6f6;
-            margin-bottom: 4px;
-        }
-
-        .test-details {
-            font-size: 11px;
-            color: var(--text-muted);
-            line-height: 1.4;
-            background: var(--bg-input);
-            padding: 6px;
-            border-radius: 4px;
-            font-family: 'JetBrains Mono', monospace;
-        }
-
-        .no-tests {
-            text-align: center;
-            color: var(--text-muted);
-            padding: 20px 0;
-            font-style: italic;
-            font-size: 12px;
-        }
-
-        footer {
-            text-align: center;
-            padding: 15px;
-            color: var(--text-muted);
-            font-size: 11px;
-            border-top: 1px solid #172a45;
-            margin-top: 20px;
-        }
-    </style>
+color: #06d6a0; }
+.log-card.failed { background-color: rgba(239, 71, 111, 0.1); border-left-color: var(--danger);
+color: #ef476f; }
+.log-card.deferred { background-color: rgba(255, 209, 102, 0.1); border-left-color:
+var(--warning); color: #ffd166; }
+table.db-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 12px; }
+table.db-table th, table.db-table td { border: 1px solid #3a506b; padding: 8px; text-align:
+left; }
+table.db-table th { background-color: #2a3c5a; color: var(--cyan-accent); }
+.sql-console { background-color: #050a14; border: 1px solid #1f4e79; padding: 15px;
+border-radius: 6px; font-family: monospace; }
+.sql-console textarea { width: 100%; height: 70px; background-color: #111; color: #00ff00;
+border: 1px solid #3a506b; padding: 10px; font-family: monospace; resize: none; border-radius: 4px; }
+.btn-sql { background-color: var(--cyan-accent); color: var(--bg-main); border: none; padding:
+8px 15px; font-weight: bold; border-radius: 4px; cursor: pointer; margin-top: 8px; font-size: 12px; }
+</style>
 </head>
 <body>
+<header>
+<h1>Ecosystem de Entrenamiento QA Bancario v4.0</h1>
+<p>Dominio de Lógica de Negocio, Consultas SQL Avanzadas y Simulación de Automatización de
+Pruebas</p>
+</header>
+<nav>
+<button id="nav-manual" class="active" onclick="switchPage('manual')">1. QA Manual &
+Requerimientos</button>
+<button id="nav-sql" onclick="switchPage('sql')">2. Consola de Base de Datos (SQL)</button>
+<button id="nav-auto" onclick="switchPage('auto')">3. Panel de Automatización</button>
+</nav>
+<!-- PÁGINA 1: QA MANUAL -->
+<div id="page-manual" class="page active">
+<div class="grid-layout">
+<div class="card">
+<h2>Inyección Manual de Transacciones</h2>
+<form id="form-manual" onsubmit="executeTest(event, 'Manual')">
+<div class="form-group">
+<label>Core Bancario Destino:</label>
+<select id="m-banco">
+<option value="Interbank Core">Interbank Core</option>
+<option value="BCP Core">BCP Core</option>
+<option value="BBVA Core">BBVA Core</option>
+</select>
+</div>
+<div class="form-group">
+<label>Código de Cuenta Interbancario (CCI - 20 dígitos):</label>
+<input type="text" id="m-cci" placeholder="Ingrese la cadena de prueba a mano"
 
-    <div class="container">
-        <header>
-            <h1>Core Banking Transaction Engine — Advanced QA Lab Suite</h1>
-            <p>Laboratorio Avanzado de Pruebas Manuales, Inyección de Carga, Control de Base de Datos y Automatización Web</p>
-        </header>
+required>
 
-        <div class="metrics-bar">
-            <div class="metric-card total">
-                <span style="font-size: 11px; color: var(--text-muted);">Total Runs</span>
-                <span class="value" id="countTotal">0</span>
-            </div>
-            <div class="metric-card passed">
-                <span style="font-size: 11px; color: var(--text-muted);">Passed (200 OK)</span>
-                <span class="value" id="countPassed">0</span>
-            </div>
-            <div class="metric-card failed">
-                <span style="font-size: 11px; color: var(--text-muted);">Failed (Bugs)</span>
-                <span class="value" id="countFailed">0</span>
-            </div>
-            <div class="metric-card auto">
-                <span style="font-size: 11px; color: var(--text-muted);">Automated Tests</span>
-                <span class="value" id="countAuto">0</span>
-            </div>
-        </div>
+</div>
+<div class="form-group">
+<label>Monto Transaccional (PEN):</label>
+<input type="number" step="0.01" id="m-monto" placeholder="0.00" required>
 
-        <div class="main-layout">
-            <div class="right-left-box" style="display: flex; flex-direction: column; gap: 20px;">
-                <div class="card">
-                    <h2>Configuración y Control de Parámetros</h2>
-                    
-                    <label>Data Pools Automatizados (Carga Rápida):</label>
-                    <div class="qa-utilities">
-                        <button type="button" class="btn-qa" onclick="generateData('valid')">🟢 Caso Feliz</button>
-                        <button type="button" class="btn-qa" onclick="generateData('bad_cci')">🔴 Forzar Mal CCI</button>
-                        <button type="button" class="btn-qa" onclick="generateData('fraud')">🔴 Forzar Fraude</button>
-                    </div>
+</div>
+<div class="form-group">
+<label>Timestamp de Simulación (Hora del Sistema):</label>
+<select id="m-hora">
+<option value="Habil">Horario Hábil (09:00 - 18:00)</option>
+<option value="Nocturno">Horario Nocturno (18:01 - 08:59)</option>
+</select>
+</div>
+<button type="submit" class="btn-primary">Inyectar Transacción al Core Engine
 
-                    <form id="transferForm">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="banco">Core Bancario:</label>
-                                <select id="banco">
-                                    <option value="Interbank">Interbank Core</option>
-                                    <option value="BCP">BCP Integrado</option>
-                                    <option value="BBVA">BBVA NetCore</option>
-                                    <option value="Banco de la Nación">Banco de la Nación</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="tipoCuenta">Tipo Cuenta:</label>
-                                <select id="tipoCuenta">
-                                    <option value="Ahorros">Ahorros DPF</option>
-                                    <option value="Corriente">Corriente Cta</option>
-                                </select>
-                            </div>
-                        </div>
+🚀</button>
 
-                        <div class="form-group">
-                            <label for="cuenta">CCI Destino (20 dígitos):</label>
-                            <input type="text" id="cuenta" placeholder="Ingrese cadena" required>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="monto">Monto:</label>
-                                <input type="number" id="monto" placeholder="0.00" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="moneda">Moneda:</label>
-                                <select id="moneda">
-                                    <option value="PEN">Soles (PEN)</option>
-                                    <option value="USD">Dólares (USD)</option>
-                                </select>
-                            </div>
-                        </div>
+</form>
+</div>
+<div class="card">
+<h2>Historial de Auditoría Interna (Logs Manuales)</h2>
+<div id="logs-manual" class="log-container">
+<span style="color: var(--text-muted);">Consola vacía. Ingrese datos manualmente a
 
-                        <div class="form-group">
-                            <label for="horaEnvio">Timestamp Operativo:</label>
-                            <select id="horaEnvio">
-                                <option value="diurno">Ventana Hábil (09:00 - 18:00)</option>
-                                <option value="nocturno">Ventana Crítica / Mantenimiento</option>
-                            </select>
-                        </div>
+la izquierda y presione Inyectar para evaluar reglas de negocio.</span>
 
-                        <button type="submit" class="btn-submit">Ejecutar Prueba Manual 🚀</button>
-                    </form>
-                </div>
+</div>
+</div>
+</div>
+</div>
+<!-- PÁGINA 2: BASE DE DATOS SQL -->
+<div id="page-sql" class="page">
+<div class="grid-layout">
+<div class="card">
+<h2>Consola Interactiva SQL / Oracle Client</h2>
+<div class="sql-console">
+<p style="color: #00ff00; font-size: 11px; margin-bottom: 5px;">-- Conectado a
 
-                <div class="card">
-                    <h2>Módulo de Automatización (QA Automation Script)</h2>
-                    <p style="font-size:12px; color:var(--text-muted); margin-top:0;">Simula la ejecución de un Framework automatizado tipo Playwright / Selenium:</p>
-                    
-                    <button class="btn-submit" style="background-color: var(--info); color:#000;" onclick="runAutomationScript()">
-                        Ejecutar Suite de Regresión Automatizada 🤖⚡
-                    </button>
+schema: CORE_BANKING_PROD</p>
 
-                    <div class="automation-box">
-                        <label>Consola del Script en Ejecución:</label>
-                        <div class="code-display" id="automationConsole">// Esperando comando de ejecución automatizada...</div>
-                    </div>
-                </div>
-            </div>
+<textarea id="sql-input" placeholder="Escribe tu sentencia SQL aquí (Ej: SELECT *
 
-            <div class="right-column">
-                <div class="card">
-                    <h2>Auditoría de Transacciones & API Mocking</h2>
-                    
-                    <div class="filter-container">
-                        <button class="btn-filter active" onclick="filterLogs('all')">Todos</button>
-                        <button class="btn-filter" onclick="filterLogs('passed')">Passed</button>
-                        <button class="btn-filter" onclick="filterLogs('failed')">Failed</button>
-                    </div>
+FROM CUENTAS;)">SELECT * FROM CUENTAS;</textarea>
 
-                    <div id="noTestsMessage" class="no-tests">Consola libre de trazas. Registre una transacción o inicie automatización.</div>
-                    <div class="test-list" id="testContainer"></div>
-                </div>
+<button class="btn-sql" onclick="runSQL()">Execute Query [F5]</button>
+</div>
+<div style="margin-top: 15px; font-size: 13px;">
+<p><strong>Tablas Disponibles:</strong></p>
+<ul style="margin-left: 20px; color: var(--cyan-accent); margin-top: 5px;">
+<li><code>CUENTAS</code> (Campos: CCI, SALDO, ESTADO, TITULAR)</li>
+<li><code>LOG_TRANSACCIONES</code> (Campos: ID, CCI, MONTO, ESTADO_HTTP,
 
-                <div class="card" style="margin-top: 10px;">
-                    <h2>Relational Database Ledger (Simulación SQL Oracle Core)</h2>
-                    <p style="font-size:12px; color:var(--text-muted); margin-top:0;">Verifica si los datos se guardan correctamente en las tablas tras pasar los filtros de QA:</p>
-                    
-                    <div class="db-table-wrapper">
-                        <table class="db-table">
-                            <thead>
-                                <tr>
-                                    <th>ID_TX</th>
-                                    <th>BANCO_DEST</th>
-                                    <th>CCI_CUENTA</th>
-                                    <th>MONTO_FINAL</th>
-                                    <th>MONEDA</th>
-                                    <th>ESTADO_DB</th>
-                                </tr>
-                            </thead>
-                            <tbody id="dbTableBody">
-                                <tr>
-                                    <td colspan="6" style="text-align:center; color:var(--text-muted); font-style:italic;">Tabla vacía. Ningún registro persistido en el Ledger.</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+MENSAJE)</li>
 
-    <footer>
-        Diseñado y Desarrollado por Jannett Sheyla Toledo Castro — Entorno de Pruebas QA Sandbox Ultimate 💻🧪
-    </footer>
+</ul>
+</div>
+</div>
+<div class="card">
+<h2>Data Viewer (Resultado de Consulta SQL)</h2>
+<div id="sql-output" style="overflow-x: auto;">
+<span style="color: var(--text-muted);">Ejecuta una consulta SQL para mapear los
 
-    <script>
-        let total = 0; let passed = 0; let failed = 0; let automated = 0;
-        let txIdCounter = 45890;
+registros actuales de las tablas del Core.</span>
 
-        // GENERADOR DE DATA POOL
-        function generateData(type) {
-            const list = ['Interbank', 'BCP', 'BBVA', 'Banco de la Nación'];
-            document.getElementById('banco').value = list[Math.floor(Math.random() * list.length)];
-            document.getElementById('tipoCuenta').value = 'Ahorros';
-            document.getElementById('moneda').value = 'PEN';
-            document.getElementById('horaEnvio').value = 'diurno';
+</div>
+</div>
+</layout>
+</div>
+<!-- PÁGINA 3: QA AUTOMATION -->
+<div id="page-auto" class="page">
+<div class="grid-layout">
 
-            if(type === 'valid') {
-                document.getElementById('cuenta').value = "002" + Math.floor(Math.random() * 90000000000000000 + 10000000000000000);
-                document.getElementById('monto').value = Math.floor(Math.random() * 900) + 100;
-            } else if(type === 'bad_cci') {
-                document.getElementById('cuenta').value = "4589-Error";
-                document.getElementById('monto').value = 50;
-            } else if(type === 'fraud') {
-                document.getElementById('cuenta').value = "00315984761234958674";
-                document.getElementById('monto').value = 99999;
-            }
-        }
+<div class="card">
+<h2>Data Pool Automatizado (Generador de Carga)</h2>
+<div class="datapool-buttons">
+<button onclick="loadDataPool('feliz')" style="border-bottom: 3px solid
 
-        // CONTROLADOR DE NEGOCIO Y MOTOR PRINCIPAL
-        function processTransaction(banco, tipoCuenta, cuenta, monto, moneda, hora, isAuto = false) {
-            document.getElementById('noTestsMessage').style.display = 'none';
-            let status = '';
-            let apiJson = '';
-            let title = '';
-            let description = '';
+var(--success);">⚡ Cargar Caso Feliz</button>
 
-            const isSQLInjection = /['";<>\/]/g.test(cuenta) || cuenta.includes('DROP') || cuenta.includes('SELECT');
+<button onclick="loadDataPool('bug')" style="border-bottom: 3px solid
 
-            if (isSQLInjection || cuenta.includes('Error')) {
-                status = 'failed'; failed++;
-                apiJson = `{\n  "status": 400,\n  "error": "Bad Request",\n  "code": "ERR_SANITIZATION_FAILED",\n  "message": "Malicious characters or structural anomaly detected."\n}`;
-                title = `Fallo Estructural / Intento de Vulnerabilidad Criminal`;
-                description = `[SEVERIDAD]: CRITICAL 🔴\n[MÓDULO]: API Gateway Sanitizer\n[BUG]: Campo cci no cumple la máscara numérica u ofrece riesgo de inyección SQL.`;
-            } else if (cuenta.length !== 20) {
-                status = 'failed'; failed++;
-                apiJson = `{\n  "status": 422,\n  "error": "Unprocessable Entity",\n  "message": "CCI length must be exactly 20 digits."\n}`;
-                title = `Error de Entrada de Datos - Longitud Inválida`;
-                description = `[SEVERIDAD]: MAJOR 🟠\n[MÓDULO]: Account Number Validation Service\n[BUG]: Backend recibió longitud incorrecta (${cuenta.length} dígitos). Falta validación síncrona en cliente.`;
-            } else if (monto > 5000) {
-                status = 'failed'; failed++;
-                apiJson = `{\n  "status": 403,\n  "error": "Forbidden",\n  "code": "LIMIT_EXCEEDED"\n}`;
-                title = `Infracción Antifraude - Límite Excedido`;
-                description = `[SEVERIDAD]: HIGH 🔴\n[MÓDULO]: Risk Management Protocol\n[BUG]: Transacción de ${moneda} ${monto} fue procesada superando el techo máximo sin requerir Token OTP.`;
-            } else if (hora === 'nocturno') {
-                status = 'warning'; passed++;
-                apiJson = `{\n  "status": 202,\n  "response": "Accepted",\n  "mode": "Deferred_ACH"\n}`;
-                title = `Operación Aceptada - Procesamiento Diferido Nocturno`;
-                description = `[SEVERIDAD]: MINOR 🟡\n[MÓDULO]: Core Clearing Batch\n[LOG]: Operación correcta, pero entra en cola asíncrona por ventana de mantenimiento técnico.`;
-                persistInDatabase(banco, cuenta, monto, moneda, 'PENDING_BATCH');
-            } else {
-                status = 'passed'; passed++;
-                apiJson = `{\n  "status": 200,\n  "statusText": "OK",\n  "transactionId": "TX-${txIdCounter}"\n}`;
-                title = `Compensación Liquidada - 200 OK`;
-                description = `[SEVERIDAD]: NONE 🟢\n[MÓDULO]: Real-Time Clearance Core\n[LOG]: Fondos conciliados. Envío correcto al backend integrado de ${banco}.`;
-                persistInDatabase(banco, cuenta, monto, moneda, 'SUCCESS_COMPLETED');
-            }
+var(--danger);">⚠️ Forzar Bug CCI</button>
 
-            total++;
-            if(isAuto) automated++;
+<button onclick="loadDataPool('limite')" style="border-bottom: 3px solid
 
-            // ACTUALIZAR INTERFAZ METRICAS
-            document.getElementById('countTotal').innerText = total;
-            document.getElementById('countPassed').innerText = passed;
-            document.getElementById('countFailed').innerText = failed;
-            document.getElementById('countAuto').innerText = automated;
+var(--warning);">🔥 Cargar Ataque Límite</button>
 
-            // CREAR LOG VISUAL DE API E INFORME
-            const card = document.createElement('div');
-            card.className = `test-item ${status}`;
-            card.setAttribute('data-status', status);
-            
-            let badgeText = status === 'passed' ? 'Test Passed 🟢' : (status === 'warning' ? 'Warning 🟡' : 'Test Failed 🔴');
-            let badgeClass = status === 'passed' ? 'badge-passed' : (status === 'warning' ? 'badge-warning' : 'badge-failed');
+</div>
+<form id="form-auto" onsubmit="executeTest(event, 'Automation')">
+<div class="form-group">
+<label>Core Bancario Destino:</label>
+<select id="a-banco">
+<option value="Interbank Core">Interbank Core</option>
+</select>
+</div>
+<div class="form-group">
+<label>CCI Inyectado por Script Automatizado:</label>
+<input type="text" id="a-cci" readonly style="background-color: #151d33;
 
-            card.innerHTML = `
-                <span class="status-badge ${badgeClass}">${badgeText} ${isAuto ? '[AUTOMATED]' : '[MANUAL]'}</span>
-                <div class="test-title">${title}</div>
-                <div class="test-details" style="margin-bottom:8px;">${description.replace(/\n/g, '<br>')}</div>
-                <label style="font-size:10px; color:var(--accent);">MOCK API RESPONSE (JSON):</label>
-                <div class="test-details" style="color:#b5cea8; background:#000;">${apiJson.replace(/\n/g, '<br>').replace(/ /g, '&nbsp;')}</div>
-            `;
+border-color: #2a3c5a; color: var(--cyan-accent);">
 
-            const container = document.getElementById('testContainer');
-            container.insertBefore(card, container.firstChild);
-        }
+</div>
+<div class="form-group">
+<label>Monto Asignado por DataPool:</label>
+<input type="number" id="a-monto" readonly style="background-color: #151d33;
 
-        // REGISTRO EN LA TABLA SQL
-        function persistInDatabase(banco, cuenta, monto, moneda, estadoDb) {
-            txIdCounter++;
-            const tbody = document.getElementById('dbTableBody');
-            
-            // Si es la primera fila, limpiar mensaje de vacía
-            if(total === 1 || tbody.innerText.includes('Tabla vacía')) {
-                tbody.innerHTML = '';
-            }
+border-color: #2a3c5a; color: var(--cyan-accent);">
 
-            const tr = document.createElement('tr');
-            let colorEstado = estadoDb === 'SUCCESS_COMPLETED' ? 'var(--success)' : 'var(--warning)';
-            
-            tr.innerHTML = `
-                <td>TX-${txIdCounter}</td>
-                <td>${banco}</td>
-                <td>${cuenta.substring(0,6)}...${cuenta.substring(16,20)}</td>
-                <td>${monto}</td>
-                <td>${moneda}</td>
-                <td style="color:${colorEstado}; font-weight:bold;">${estadoDb}</td>
-            `;
-            tbody.insertBefore(tr, tbody.firstChild);
-        }
+</div>
+<div class="form-group">
+<label>Simulación de Entorno:</label>
+<input type="text" value="PLAYWRIGHT_CHROME_HEADLESS" readonly
+style="background-color: #151d33; border-color: #2a3c5a; font-family: monospace; color:
+var(--warning);">
+</div>
+<button type="submit" class="btn-primary" style="background-color:
 
-        // EVENTO FORMULARIO
-        document.getElementById('transferForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            processTransaction(
-                document.getElementById('banco').value,
-                document.getElementById('tipoCuenta').value,
-                document.getElementById('cuenta').value,
-                parseFloat(document.getElementById('monto').value),
-                document.getElementById('moneda').value,
-                document.getElementById('horaEnvio').value,
-                false
-            );
-            this.reset();
-        });
+var(--cyan-accent);">Inyectar Suite Automatizada 🤖</button>
 
-        // FILTRADO DE LOGS
-        function filterLogs(type) {
-            document.querySelectorAll('.btn-filter').forEach(b => b.classList.remove('active'));
-            event.target.classList.add('active');
+</form>
+</div>
+<div class="card">
+<h2>Consola de Automatización (Logs Funcionales)</h2>
+<div id="logs-auto" class="log-container">
+<span style="color: var(--text-muted);">Consola de automatización vacía. Seleccione
 
-            document.querySelectorAll('.test-item').forEach(item => {
-                const s = item.getAttribute('data-status');
-                if(type === 'all') item.style.display = 'block';
-                else if(type === 'passed' && (s === 'passed' || s === 'warning')) item.style.display = 'block';
-                else if(type === 'failed' && s === 'failed') item.style.display = 'block';
-                else item.style.display = 'none';
-            });
-        }
+un Data Pool superior y ejecute la suite corporativa.</span>
 
-        // SIMULADOR SCRIPT AUTOMATIZACIÓN (AUTOMATION CORE)
-        function runAutomationScript() {
-            const consoleBox = document.getElementById('automationConsole');
-            consoleBox.innerHTML = `[INFO] Inicializando Framework de Automatización...\n[INFO] Ejecutando: Suite_Regresion_Bancaria.spec.js\n[PLAYWRIGHT] Abriendo navegador Chromium en modo headless...`;
-            
-            setTimeout(() => {
-                consoleBox.innerHTML += `\n[TEST 1] Evaluando 'Caso Feliz BCP Soles'...\n  -> Rellenando CCI: 00219300458692514783\n  -> Monto: S/. 450.00\n  -> Resultado: HTTP 200 OK\n[STATUS] PASSED ✅`;
-                processTransaction('BCP', 'Ahorros', '00219300458692514783', 450, 'PEN', 'diurno', true);
-            }, 1000);
+</div>
+</div>
+</div>
+</div>
+<script>
+// BASE DE DATOS SIMULADA EN MEMORIA (DICCIONARIO DE OBJETOS)
+let BASE_DATOS = {
+"CUENTAS": [
+{ CCI: "00319300321456789012", SALDO: 12500.00, ESTADO: "ACTIVA", TITULAR: "Jannett
 
-            setTimeout(() => {
-                consoleBox.innerHTML += `\n\n[TEST 2] Evaluando 'Límite Antifraude Excedido BBVA'...\n  -> Rellenando CCI: 00311548796325418795\n  -> Monto: S/. 12000.00\n  -> Resultado: HTTP 403 Forbidden\n[STATUS] PASSED ✅ (Bug Capturado Correctamente)`;
-                processTransaction('BBVA', 'Corriente', '00311548796325418795', 12000, 'PEN', 'diurno', true);
-            }, 2200);
+Toledo C." },
 
-            setTimeout(() => {
-                consoleBox.innerHTML += `\n\n[TEST 3] Evaluando 'Fallo Estructural de Entrada'...\n  -> Rellenando CCI: 4589-Error\n  -> Monto: S/. 10.00\n  -> Resultado: HTTP 400 Bad Request\n[STATUS] PASSED ✅ (Excepción Controlada)`;
-                processTransaction('Interbank', 'Ahorros', '4589-Error', 10, 'PEN', 'diurno', true);
-                consoleBox.innerHTML += `\n\n[SUCCESS] Suite completada. 3/3 Tests Ejecutados.`;
-            }, 3500);
-        }
-    </script>
+{ CCI: "01123400987654321098", SALDO: 450.00, ESTADO: "ACTIVA", TITULAR: "Alexander M."
+
+},
+
+{ CCI: "00298700123456789012", SALDO: 8900.00, ESTADO: "BLOQUEADA", TITULAR: "Cuenta
+
+Sospechosa Lima" }
+],
+"LOG_TRANSACCIONES": [
+{ ID: 101, CCI: "00319300321456789012", MONTO: 150.00, ESTADO_HTTP: "200 OK", MENSAJE:
+
+"Validación Exitosa Core Inicial" }
+
+]
+};
+function switchPage(pageName) {
+document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+document.getElementById('page-' + pageName).classList.add('active');
+document.getElementById('nav-' + pageName).classList.add('active');
+if(pageName === 'sql') runSQL();
+}
+function loadDataPool(caseType) {
+if(caseType === 'feliz') {
+document.getElementById('a-cci').value = "00319300321456789012";
+document.getElementById('a-monto').value = "450";
+} else if(caseType === 'bug') {
+document.getElementById('a-cci').value = "003-ERROR";
+document.getElementById('a-monto').value = "100";
+} else if(caseType === 'limite') {
+document.getElementById('a-cci').value = "00319300321456789012";
+document.getElementById('a-monto').value = "7500";
+}
+}
+function executeTest(e, scope) {
+e.preventDefault();
+let cci = (scope === 'Manual') ? document.getElementById('m-cci').value :
+
+document.getElementById('a-cci').value;
+
+let monto = parseFloat((scope === 'Manual') ? document.getElementById('m-monto').value :
+
+document.getElementById('a-monto').value);
+
+let hora = (scope === 'Manual') ? document.getElementById('m-hora').value : "Habil";
+let banco = (scope === 'Manual') ? document.getElementById('m-banco').value :
+
+document.getElementById('a-banco').value;
+
+let logContainer = (scope === 'Manual') ? document.getElementById('logs-manual') :
+
+document.getElementById('logs-auto');
+
+if(logContainer.innerHTML.includes("Consola vacía") ||
+
+logContainer.innerHTML.includes("Consola de automatización")) logContainer.innerHTML = "";
+
+let timestamp = new Date().toLocaleTimeString();
+let nId = Math.floor(Math.random() * 900) + 100;
+// --- MOTOR DE LÓGICA Y REGLAS DE NEGOCIO (LOGIC ENGINE) ---
+// Regela 1: Validación Estructural de Longitud del CCI
+if (cci.length !== 20 || isNaN(cci)) {
+let msg = `[${timestamp}] TX-${nId} RECHAZADA por Core. Motivo: Error estructural de
+Cuenta CCI. Longitud: ${cci.length} dígitos (Requerido: 20 numéricos). HTTP 400 Bad Request.`;
+logContainer.innerHTML = `<div class="log-card failed"><strong>TEST FAILED
+
+🔴</strong><br>${msg}</div>` + logContainer.innerHTML;
+
+BASE_DATOS.LOG_TRANSACCIONES.push({ ID: nId, CCI: cci, MONTO: monto, ESTADO_HTTP: "400
+
+Bad Request", MENSAJE: "Error de Estructura CCI" });
+
+return;
+}
+// Buscar la cuenta en nuestra base de datos simulada
+let cuentaEncontrada = BASE_DATOS.CUENTAS.find(c => c.CCI === cci);
+// Regla 2: Validación de Cuenta Bloqueada
+if (cuentaEncontrada && cuentaEncontrada.ESTADO === "BLOQUEADA") {
+let msg = `[${timestamp}] TX-${nId} RECHAZADA. Alerta: La cuenta destino se encuentra
+
+'BLOQUEADA' por el departamento de Riesgos y Lavado de Activos. HTTP 403 Forbidden.`;
+logContainer.innerHTML = `<div class="log-card failed"><strong>TEST FAILED 🔴
+
+(Seguridad)</strong><br>${msg}</div>` + logContainer.innerHTML;
+
+BASE_DATOS.LOG_TRANSACCIONES.push({ ID: nId, CCI: cci, MONTO: monto, ESTADO_HTTP: "403
+
+Forbidden", MENSAJE: "Cuenta de destino Bloqueada" });
+
+return;
+}
+// Regla 3: Control Preventivo de Fraude (Límite Diario de 5000)
+if (monto > 5000) {
+let msg = `[${timestamp}] TX-${nId} RECHAZADA. Error: El monto inyectado (${monto} PEN)
+supera el límite máximo permitido por transacción (5,000.00 PEN). HTTP 422 Unprocessable Entity.`;
+logContainer.innerHTML = `<div class="log-card failed"><strong>TEST FAILED 🔴 (Límite
+
+Diario Excedido)</strong><br>${msg}</div>` + logContainer.innerHTML;
+
+BASE_DATOS.LOG_TRANSACCIONES.push({ ID: nId, CCI: cci, MONTO: monto, ESTADO_HTTP: "422
+
+Unprocessable Entity", MENSAJE: "Excede límite de fraude de 5K" });
+
+return;
+}
+// Regla 4: Lógica de Negocio según Horario
+if (hora === "Nocturno") {
+let msg = `[${timestamp}] TX-${nId} DETECTADA. Estado: Procesamiento Diferidó (Cámara
+de Compensación CCE Cerrada). La transacción se completará a las 09:00 AM. HTTP 202 Accepted.`;
+logContainer.innerHTML = `<div class="log-card deferred"><strong>TEST DEFERRED
+
+🟡</strong><br>${msg}</div>` + logContainer.innerHTML;
+
+BASE_DATOS.LOG_TRANSACCIONES.push({ ID: nId, CCI: cci, MONTO: monto, ESTADO_HTTP: "202
+
+Accepted", MENSAJE: "Procesamiento Nocturno Diferido" });
+
+} else {
+// Caso Feliz
+let msg = `[${timestamp}] TX-${nId} EXITOSA en ${banco}. Cuenta destino: ${cci}. Monto:
+
+${monto} PEN. Código de Respuesta: HTTP 200 OK. Conciliación en línea completada.`;
+logContainer.innerHTML = `<div class="log-card passed"><strong>TEST PASSED
+
+🟢</strong><br>${msg}</div>` + logContainer.innerHTML;
+
+// Actualizar saldo si la cuenta origen simulada es la primera de la BD
+if(cuentaEncontrada) {
+cuentaEncontrada.SALDO += monto;
+}
+BASE_DATOS.LOG_TRANSACCIONES.push({ ID: nId, CCI: cci, MONTO: monto, ESTADO_HTTP: "200
+
+OK", MENSAJE: "Transferencia Interbancaria Exitosa" });
+
+}
+}
+// MOTOR DE CONSULTAS SQL SIMULADO (SQL ENGINE)
+function runSQL() {
+let sql = document.getElementById('sql-input').value.trim().toUpperCase();
+let output = document.getElementById('sql-output');
+
+if (sql.includes("SELECT * FROM CUENTAS")) {
+let html = ``;
+BASE_DATOS.CUENTAS.forEach(c => {
+html += ``;
+});
+html += `
+
+CCI SALDO (PEN) ESTADO TITULAR
+
+${c.CCI} ${c.SALDO.toFixed
+
+(2)}
+
+${c.ESTADO} ${c.TITULAR}
+
+`;
+
+output.innerHTML = html;
+} else if (sql.includes("SELECT * FROM LOG_TRANSACCIONES")) {
+if(BASE_DATOS.LOG_TRANSACCIONES.length === 0) {
+output.innerHTML = `Query Ok. Empty Set (0 registros grabados). Inyecta
+
+transacciones en la pestaña de QA primero.`;
+
+return;
+}
+let html = ``;
+BASE_DATOS.LOG_TRANSACCIONES.forEach(l => {
+html += ``;
+});
+html += `
+
+ID CCI MONTO ESTADO_HTTP MENSAJE
+${l.ID} ${l.CCI} ${l.MONTO} ${l.ESTADO_HT
+
+TP}
+
+${l.MENSAJE}
+
+`;
+
+output.innerHTML = html;
+} else if (sql.includes("UPDATE CUENTAS SET ESTADO = 'BLOQUEADA'")) {
+BASE_DATOS.CUENTAS.forEach(c => { if(c.CCI.includes("011234")) c.ESTADO = 'BLOQUEADA';
+
+});
+
+output.innerHTML = `Query OK, 1 row affected. Cuenta de Alexander M. fue BLOQUEADA con
+
+éxito.`;
+
+} else if (sql.includes("UPDATE CUENTAS SET SALDO =")) {
+BASE_DATOS.CUENTAS[0].SALDO = 20000;
+output.innerHTML = `Query OK, 1 row affected. Saldo modificado artificialmente para
+
+pruebas.`;
+
+} else {
+output.innerHTML = `🚨 SQL ERROR: Sintaxis no soportada en este entorno de práctica.
+
+Prueba con consultas estándar permitidas como:
+• SELECT * FROM CUENTAS;
+• SELECT * FROM LOG_TRANSACCIONES;
+
+• UPDATE CUENTAS SET ESTADO = 'BLOQUEADA' WHERE CCI = '01123400987654321098';`;
+
+}
+}
+</style>
 </body>
 </html>
