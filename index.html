@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enterprise Banking Core - QA Automation Lab</title>
+    <title>Enterprise Banking Core - QA & Automation Lab Ultimate</title>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Segoe+UI:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -16,6 +16,7 @@
             --success: #2ecc71;
             --danger: #e74c3c;
             --warning: #f1c40f;
+            --info: #00bfff;
         }
 
         body {
@@ -30,7 +31,7 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             flex: 1;
             width: 100%;
@@ -38,67 +39,73 @@
 
         header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             border-bottom: 2px solid #172a45;
-            padding-bottom: 20px;
+            padding-bottom: 15px;
         }
 
         header h1 {
             color: var(--accent);
             margin-bottom: 5px;
-            font-size: 26px;
+            font-size: 24px;
             font-family: 'JetBrains Mono', monospace;
         }
 
         header p {
             color: var(--text-muted);
             margin-top: 0;
-            font-size: 14px;
+            font-size: 13px;
         }
 
-        /* PANEL DE MÉTRICAS QA */
+        /* METRICAS */
         .metrics-bar {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 15px;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
         .metric-card {
             background-color: var(--bg-card);
             border: 1px solid #233554;
-            padding: 15px;
+            padding: 12px;
             border-radius: 8px;
             text-align: center;
         }
 
         .metric-card .value {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: bold;
             font-family: 'JetBrains Mono', monospace;
             display: block;
             margin-top: 5px;
         }
-
         .metric-card.total .value { color: var(--text-light); }
         .metric-card.passed .value { color: var(--success); }
         .metric-card.failed .value { color: var(--danger); }
+        .metric-card.auto .value { color: var(--info); }
 
-        .grid {
+        /* ARQUITECTURA EN GRID TRIPLE */
+        .main-layout {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 30px;
+            gap: 20px;
         }
 
-        @media (min-width: 992px) {
-            .grid {
-                grid-template-columns: 500px 1fr;
+        @media (min-width: 1200px) {
+            .main-layout {
+                grid-template-columns: 450px 1fr;
+            }
+            .right-column {
+                display: grid;
+                grid-template-rows: auto auto;
+                gap: 20px;
             }
         }
 
         .card {
             background-color: var(--bg-card);
-            padding: 25px;
+            padding: 20px;
             border-radius: 12px;
             box-shadow: 0 10px 30px -15px rgba(2,12,27,0.7);
             border: 1px solid #233554;
@@ -108,8 +115,10 @@
         .card h2 {
             margin-top: 0;
             color: #ccd6f6;
-            font-size: 18px;
-            margin-bottom: 20px;
+            font-size: 16px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #1f2d4d;
+            padding-bottom: 8px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -118,30 +127,31 @@
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
+            gap: 12px;
         }
 
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         label {
             display: block;
             font-weight: 600;
-            margin-bottom: 6px;
+            margin-bottom: 5px;
             color: var(--text-muted);
-            font-size: 13px;
+            font-size: 12px;
         }
 
         input, select {
             width: 100%;
-            padding: 10px;
+            padding: 9px;
             background-color: var(--bg-input);
             border: 1px solid #233554;
             border-radius: 6px;
             color: var(--text-light);
             box-sizing: border-box;
-            font-size: 13px;
+            font-size: 12px;
+            font-family: 'JetBrains Mono', monospace;
         }
 
         input:focus, select:focus {
@@ -153,25 +163,21 @@
             background-color: var(--accent);
             color: var(--bg-main);
             border: none;
-            padding: 12px;
-            font-size: 14px;
+            padding: 11px;
+            font-size: 13px;
             font-weight: bold;
             border-radius: 6px;
             cursor: pointer;
             width: 100%;
             transition: all 0.3s ease;
-            margin-top: 10px;
+            margin-top: 5px;
         }
 
-        .btn-submit:hover {
-            background-color: #52d1b2;
-            transform: translateY(-1px);
-        }
+        .btn-submit:hover { background-color: #52d1b2; }
 
-        /* QA HUB BUTTONS */
         .qa-utilities {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             margin-bottom: 15px;
         }
 
@@ -179,32 +185,77 @@
             background-color: #172a45;
             color: var(--accent);
             border: 1px solid var(--accent);
-            padding: 8px 12px;
-            font-size: 11px;
+            padding: 6px 10px;
+            font-size: 10px;
             font-weight: bold;
             border-radius: 4px;
             cursor: pointer;
             flex: 1;
-            transition: all 0.2s;
         }
 
-        .btn-qa:hover {
-            background-color: rgba(100, 255, 218, 0.1);
+        .btn-qa:hover { background-color: rgba(100, 255, 218, 0.1); }
+
+        /* SECCIÓN AUTOMATIZACIÓN */
+        .automation-box {
+            background-color: var(--bg-input);
+            border: 1px solid #1f2d4d;
+            border-radius: 6px;
+            padding: 10px;
+            margin-top: 15px;
         }
 
-        /* LOG FILTERS */
+        .code-display {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: #a9b7c6;
+            white-space: pre-wrap;
+            background: #040a14;
+            padding: 8px;
+            border-radius: 4px;
+            margin-top: 5px;
+            border-left: 3px solid var(--info);
+        }
+
+        /* TABLA SQL SIMULADA */
+        .db-table-wrapper {
+            overflow-x: auto;
+            margin-top: 10px;
+        }
+
+        .db-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            text-align: left;
+        }
+
+        .db-table th {
+            background-color: #172a45;
+            color: var(--accent);
+            padding: 8px;
+            border: 1px solid #233554;
+        }
+
+        .db-table td {
+            padding: 8px;
+            border: 1px solid #233554;
+            color: var(--text-light);
+        }
+
+        /* FILTROS Y LOGS */
         .filter-container {
             display: flex;
             gap: 8px;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .btn-filter {
             background: #172a45;
             border: 1px solid #233554;
             color: var(--text-muted);
-            padding: 5px 12px;
-            font-size: 12px;
+            padding: 4px 10px;
+            font-size: 11px;
             border-radius: 4px;
             cursor: pointer;
         }
@@ -212,37 +263,32 @@
         .btn-filter.active {
             background-color: var(--accent);
             color: var(--bg-main);
-            border-color: var(--accent);
             font-weight: bold;
         }
 
-        /* LOG ITEMS */
         .test-list {
-            max-height: 600px;
+            max-height: 320px;
             overflow-y: auto;
-            padding-right: 5px;
         }
 
         .test-item {
             background: #172a45;
-            padding: 15px;
+            padding: 12px;
             border-radius: 6px;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             border-left: 5px solid var(--accent);
-            font-family: system-ui, sans-serif;
         }
-
         .test-item.passed { border-left-color: var(--success); }
         .test-item.failed { border-left-color: var(--danger); }
         .test-item.warning { border-left-color: var(--warning); }
-        
+
         .status-badge {
             display: inline-block;
-            padding: 3px 6px;
-            font-size: 10px;
+            padding: 2px 5px;
+            font-size: 9px;
             font-weight: bold;
             border-radius: 3px;
-            margin-bottom: 8px;
+            margin-bottom: 5px;
             text-transform: uppercase;
             font-family: 'JetBrains Mono', monospace;
         }
@@ -252,36 +298,36 @@
 
         .test-title {
             font-weight: bold;
-            font-size: 14px;
+            font-size: 13px;
             color: #ccd6f6;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
         }
+
         .test-details {
-            font-size: 12px;
+            font-size: 11px;
             color: var(--text-muted);
-            line-height: 1.5;
+            line-height: 1.4;
             background: var(--bg-input);
-            padding: 8px;
+            padding: 6px;
             border-radius: 4px;
             font-family: 'JetBrains Mono', monospace;
-            border: 1px solid #1f2d4d;
         }
 
         .no-tests {
             text-align: center;
             color: var(--text-muted);
-            padding: 40px 0;
+            padding: 20px 0;
             font-style: italic;
-            font-size: 13px;
+            font-size: 12px;
         }
 
         footer {
             text-align: center;
-            padding: 20px;
+            padding: 15px;
             color: var(--text-muted);
-            font-size: 12px;
+            font-size: 11px;
             border-top: 1px solid #172a45;
-            margin-top: 30px;
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -289,276 +335,318 @@
 
     <div class="container">
         <header>
-            <h1>Core Banking Transaction Simulator — QA Lab Sandbox</h1>
-            <p>Suite de Ejecución de Casos de Prueba Estructurales, Reglas de Negocio Bancarias y Control de Excepciones</p>
+            <h1>Core Banking Transaction Engine — Advanced QA Lab Suite</h1>
+            <p>Laboratorio Avanzado de Pruebas Manuales, Inyección de Carga, Control de Base de Datos y Automatización Web</p>
         </header>
 
-        <!-- KPI METRICS SUITE -->
         <div class="metrics-bar">
             <div class="metric-card total">
-                <span style="font-size: 12px; color: var(--text-muted);">Total Runs</span>
+                <span style="font-size: 11px; color: var(--text-muted);">Total Runs</span>
                 <span class="value" id="countTotal">0</span>
             </div>
             <div class="metric-card passed">
-                <span style="font-size: 12px; color: var(--text-muted);">Passed (200 OK)</span>
+                <span style="font-size: 11px; color: var(--text-muted);">Passed (200 OK)</span>
                 <span class="value" id="countPassed">0</span>
             </div>
             <div class="metric-card failed">
-                <span style="font-size: 12px; color: var(--text-muted);">Failed (Bugs Found)</span>
+                <span style="font-size: 11px; color: var(--text-muted);">Failed (Bugs)</span>
                 <span class="value" id="countFailed">0</span>
+            </div>
+            <div class="metric-card auto">
+                <span style="font-size: 11px; color: var(--text-muted);">Automated Tests</span>
+                <span class="value" id="countAuto">0</span>
             </div>
         </div>
 
-        <div class="grid">
-            <!-- INPUT CONTROL CON SECCIÓN DE HERRAMIENTAS AUTOMATIZADAS -->
-            <div class="card">
-                <h2>Control de Parámetros
-                    <span style="font-size: 11px; color: var(--accent); font-family: 'JetBrains Mono';">v3.0 Robust-Core</span>
-                </h2>
-                
-                <label>Data Pool Automatizado (Generador de Carga):</label>
-                <div class="qa-utilities">
-                    <button type="button" class="btn-qa" onclick="generateTestData('valid')">⚡ Cargar Caso Feliz</button>
-                    <button type="button" class="btn-qa" onclick="generateTestData('invalid_cci')">⚠️ Forzar Bug CCI</button>
-                    <button type="button" class="btn-qa" onclick="generateTestData('overflow')">🔥 Cargar Ataque de Límite</button>
+        <div class="main-layout">
+            <div class="right-left-box" style="display: flex; flex-direction: column; gap: 20px;">
+                <div class="card">
+                    <h2>Configuración y Control de Parámetros</h2>
+                    
+                    <label>Data Pools Automatizados (Carga Rápida):</label>
+                    <div class="qa-utilities">
+                        <button type="button" class="btn-qa" onclick="generateData('valid')">🟢 Caso Feliz</button>
+                        <button type="button" class="btn-qa" onclick="generateData('bad_cci')">🔴 Forzar Mal CCI</button>
+                        <button type="button" class="btn-qa" onclick="generateData('fraud')">🔴 Forzar Fraude</button>
+                    </div>
+
+                    <form id="transferForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="banco">Core Bancario:</label>
+                                <select id="banco">
+                                    <option value="Interbank">Interbank Core</option>
+                                    <option value="BCP">BCP Integrado</option>
+                                    <option value="BBVA">BBVA NetCore</option>
+                                    <option value="Banco de la Nación">Banco de la Nación</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="tipoCuenta">Tipo Cuenta:</label>
+                                <select id="tipoCuenta">
+                                    <option value="Ahorros">Ahorros DPF</option>
+                                    <option value="Corriente">Corriente Cta</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cuenta">CCI Destino (20 dígitos):</label>
+                            <input type="text" id="cuenta" placeholder="Ingrese cadena" required>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="monto">Monto:</label>
+                                <input type="number" id="monto" placeholder="0.00" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="moneda">Moneda:</label>
+                                <select id="moneda">
+                                    <option value="PEN">Soles (PEN)</option>
+                                    <option value="USD">Dólares (USD)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="horaEnvio">Timestamp Operativo:</label>
+                            <select id="horaEnvio">
+                                <option value="diurno">Ventana Hábil (09:00 - 18:00)</option>
+                                <option value="nocturno">Ventana Crítica / Mantenimiento</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn-submit">Ejecutar Prueba Manual 🚀</button>
+                    </form>
                 </div>
 
-                <form id="transferForm">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="banco">Core Bancario Destino:</label>
-                            <select id="banco">
-                                <option value="Interbank">Interbank Core</option>
-                                <option value="BCP">BCP Sistema Integrado</option>
-                                <option value="BBVA">BBVA Net-Core</option>
-                                <option value="Banco de la Nación">Banco de la Nación MultiRed</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="tipoCuenta">Tipo de Producto:</label>
-                            <select id="tipoCuenta">
-                                <option value="Ahorros">Cuenta de Ahorros DPF</option>
-                                <option value="Corriente">Cuenta Corriente Empresa</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="cuenta">Código de Cuenta Interbancario (CCI - 20 dígitos):</label>
-                        <input type="text" id="cuenta" placeholder="Ingrese o genere la cadena de prueba" required>
-                    </div>
+                <div class="card">
+                    <h2>Módulo de Automatización (QA Automation Script)</h2>
+                    <p style="font-size:12px; color:var(--text-muted); margin-top:0;">Simula la ejecución de un Framework automatizado tipo Playwright / Selenium:</p>
                     
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="monto">Monto Transaccional:</label>
-                            <input type="number" id="monto" placeholder="0.00" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="moneda">Divisa (ISO 4217):</label>
-                            <select id="moneda">
-                                <option value="PEN">Soles (PEN)</option>
-                                <option value="USD">Dólares (USD)</option>
-                            </select>
-                        </div>
-                    </div>
+                    <button class="btn-submit" style="background-color: var(--info); color:#000;" onclick="runAutomationScript()">
+                        Ejecutar Suite de Regresión Automatizada 🤖⚡
+                    </button>
 
-                    <div class="form-group">
-                        <label for="horaEnvio">Timestamp de Simulación (Hora):</label>
-                        <select id="horaEnvio">
-                            <option value="diurno">Horario Hábil (09:00 - 18:00)</option>
-                            <option value="nocturno">Horario Crítico / Batch (23:30 - 04:00)</option>
-                        </select>
+                    <div class="automation-box">
+                        <label>Consola del Script en Ejecución:</label>
+                        <div class="code-display" id="automationConsole">// Esperando comando de ejecución automatizada...</div>
                     </div>
-
-                    <button type="submit" class="btn-submit">Inyectar Transacción al Core Engine 🚀</button>
-                </form>
+                </div>
             </div>
 
-            <!-- AUDITORÍA DE LOGS CON FILTRADO REAL -->
-            <div class="card">
-                <h2>Historial de Auditoría Interna (Logs Funcionales)</h2>
-                
-                <div class="filter-container">
-                    <button class="btn-filter active" onclick="filterLogs('all')">Todos los Casos</button>
-                    <button class="btn-filter" onclick="filterLogs('passed')">Passed (Verdes)</button>
-                    <button class="btn-filter" onclick="filterLogs('failed')">Failed (Bugs)</button>
+            <div class="right-column">
+                <div class="card">
+                    <h2>Auditoría de Transacciones & API Mocking</h2>
+                    
+                    <div class="filter-container">
+                        <button class="btn-filter active" onclick="filterLogs('all')">Todos</button>
+                        <button class="btn-filter" onclick="filterLogs('passed')">Passed</button>
+                        <button class="btn-filter" onclick="filterLogs('failed')">Failed</button>
+                    </div>
+
+                    <div id="noTestsMessage" class="no-tests">Consola libre de trazas. Registre una transacción o inicie automatización.</div>
+                    <div class="test-list" id="testContainer"></div>
                 </div>
 
-                <div id="noTestsMessage" class="no-tests">Consola vacía. Inicie la inyección de carga técnica o genere un Data Pool.</div>
-                <div class="test-list" id="testContainer"></div>
+                <div class="card" style="margin-top: 10px;">
+                    <h2>Relational Database Ledger (Simulación SQL Oracle Core)</h2>
+                    <p style="font-size:12px; color:var(--text-muted); margin-top:0;">Verifica si los datos se guardan correctamente en las tablas tras pasar los filtros de QA:</p>
+                    
+                    <div class="db-table-wrapper">
+                        <table class="db-table">
+                            <thead>
+                                <tr>
+                                    <th>ID_TX</th>
+                                    <th>BANCO_DEST</th>
+                                    <th>CCI_CUENTA</th>
+                                    <th>MONTO_FINAL</th>
+                                    <th>MONEDA</th>
+                                    <th>ESTADO_DB</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dbTableBody">
+                                <tr>
+                                    <td colspan="6" style="text-align:center; color:var(--text-muted); font-style:italic;">Tabla vacía. Ningún registro persistido en el Ledger.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- CREDENCIAL RECLUTAMIENTO NTT DATA -->
     <footer>
-        Diseñado y Desarrollado por Jannett Sheyla Toledo Castro — Entorno de Pruebas QA Sandbox 💻🧪
+        Diseñado y Desarrollado por Jannett Sheyla Toledo Castro — Entorno de Pruebas QA Sandbox Ultimate 💻🧪
     </footer>
 
     <script>
-        // MÉTRICAS GLOBALES DE CONTROL QA
-        let totalRuns = 0;
-        let passedRuns = 0;
-        let failedRuns = 0;
+        let total = 0; let passed = 0; let failed = 0; let automated = 0;
+        let txIdCounter = 45890;
 
-        // DATA POOL AUTOMATIZADO PARA ACELERAR EVALUACIONES DE RECLUTADORES
-        function generateTestData(type) {
-            const bancos = ['Interbank', 'BCP', 'BBVA', 'Banco de la Nación'];
-            document.getElementById('banco').value = bancos[Math.floor(Math.random() * bancos.length)];
-            document.getElementById('tipoCuenta').value = Math.random() > 0.5 ? 'Ahorros' : 'Corriente';
-            document.getElementById('moneda').value = Math.random() > 0.4 ? 'PEN' : 'USD';
+        // GENERADOR DE DATA POOL
+        function generateData(type) {
+            const list = ['Interbank', 'BCP', 'BBVA', 'Banco de la Nación'];
+            document.getElementById('banco').value = list[Math.floor(Math.random() * list.length)];
+            document.getElementById('tipoCuenta').value = 'Ahorros';
+            document.getElementById('moneda').value = 'PEN';
             document.getElementById('horaEnvio').value = 'diurno';
 
-            if (type === 'valid') {
-                // Generar número CCI de 20 dígitos aleatorios reales
-                let cciValido = "003" + Math.floor(Math.random() * 90000000000000000 + 10000000000000000);
-                document.getElementById('cuenta').value = cciValido.substring(0, 20);
-                document.getElementById('monto').value = Math.floor(Math.random() * 1200) + 50;
-            } else if (type === 'invalid_cci') {
-                // Forzar quiebre de longitud (Edge case negativo)
-                let cciCorto = "003" + Math.floor(Math.random() * 900000);
-                document.getElementById('cuenta').value = cciCorto;
-                document.getElementById('monto').value = 250;
-            } else if (type === 'overflow') {
-                // Forzar quiebre de políticas de seguridad por desbordamiento de monto diario
-                let cciValido = "002" + Math.floor(Math.random() * 90000000000000000 + 10000000000000000);
-                document.getElementById('cuenta').value = cciValido.substring(0, 20);
-                document.getElementById('monto').value = Math.floor(Math.random() * 50000) + 10001; // Monto masivo crítico
+            if(type === 'valid') {
+                document.getElementById('cuenta').value = "002" + Math.floor(Math.random() * 90000000000000000 + 10000000000000000);
+                document.getElementById('monto').value = Math.floor(Math.random() * 900) + 100;
+            } else if(type === 'bad_cci') {
+                document.getElementById('cuenta').value = "4589-Error";
+                document.getElementById('monto').value = 50;
+            } else if(type === 'fraud') {
+                document.getElementById('cuenta').value = "00315984761234958674";
+                document.getElementById('monto').value = 99999;
             }
         }
 
-        // MOTOR PRINCIPAL DE EVALUACIÓN TRANSACCIONAL
-        document.getElementById('transferForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            const banco = document.getElementById('banco').value;
-            const tipoCuenta = document.getElementById('tipoCuenta').value;
-            const cuenta = document.getElementById('cuenta').value;
-            const monto = parseFloat(document.getElementById('monto').value);
-            const moneda = document.getElementById('moneda').value;
-            const hora = document.getElementById('horaEnvio').value;
-
+        // CONTROLADOR DE NEGOCIO Y MOTOR PRINCIPAL
+        function processTransaction(banco, tipoCuenta, cuenta, monto, moneda, hora, isAuto = false) {
             document.getElementById('noTestsMessage').style.display = 'none';
+            let status = '';
+            let apiJson = '';
+            let title = '';
+            let description = '';
 
-            let resultHTML = '';
-            let statusClass = '';
+            const isSQLInjection = /['";<>\/]/g.test(cuenta) || cuenta.includes('DROP') || cuenta.includes('SELECT');
 
-            // 1. DETECCIÓN CORTAFUEGOS: ATAQUES BÁSICOS DE SEGURIDAD (SQL INJECTION / SCRIPT INJECTION)
-            const containsMaliciousCode = /['";<>\/]/g.test(cuenta);
-
-            if (containsMaliciousCode) {
-                statusClass = 'failed';
-                failedRuns++;
-                resultHTML = `
-                    <span class="status-badge badge-failed">Critical Fault 🔴</span>
-                    <div class="test-title">Vulnerabilidad Crítica - Secuestro de Input / Code Injection</div>
-                    <div class="test-details">
-                        [MÓDULO]: Seguridad de Datos Internos<br>
-                        [ESCENARIO]: Inyección de caracteres especiales en campo CCI.<br>
-                        [BUG]: El sistema no sanitiza entradas. Peligro latente de SQL/XSS Injection.<br>
-                        [ACTUAL]: Ejecución permitida. Posible filtración en base de datos.
-                    </div>
-                `;
-            }
-            // 2. PRUEBA DE CAMPO BORDER: VALIDACIÓN ESTRUCTURAL DE CCI PERUANO (EXACTAMENTE 20 DÍGITOS)
-            else if (cuenta.length !== 20) {
-                statusClass = 'failed';
-                failedRuns++;
-                resultHTML = `
-                    <span class="status-badge badge-failed">Test Failed 🔴</span>
-                    <div class="test-title">Estructura Inválida - Fallo de Máscara de Red</div>
-                    <div class="test-details">
-                        [MÓDULO]: Formato de Intercambio Financiero Interbancario<br>
-                        [ESCENARIO]: Envío de cuenta con longitud anómala de ${cuenta.length} caracteres.<br>
-                        [BUG]: El frontend debió bloquear el submit mediante validación de máscara.<br>
-                        [ESPERADO]: Bloqueo preventivo en cliente. Mensaje de error controlado.
-                    </div>
-                `;
-            } 
-            // 3. PRUEBA DE REGLA DE NEGOCIO: MONTO DIARIO TOPADO POR POLÍTICA DE RIESGO BANCARIO
-            else if (monto > 5000) {
-                statusClass = 'failed';
-                failedRuns++;
-                resultHTML = `
-                    <span class="status-badge badge-failed">Test Failed 🔴</span>
-                    <div class="test-title">Infracción de Techo Máximo Monetario (Risk Audit)</div>
-                    <div class="test-details">
-                        [MÓDULO]: Reglas de Cumplimiento Normativo de Fraudes<br>
-                        [ESCENARIO]: Intento de envío masivo de ${moneda} ${monto.toFixed(2)} sin Token de Segunda Firma.<br>
-                        [BUG]: La pasarela procesó el dinero saltándose el control diario antifraude.<br>
-                        [ESPERADO]: Redirección forzada a verificación biométrica / Token Digital.
-                    </div>
-                `;
-            } 
-            // 4. PRUEBA DE CASO ESPECIAL: HORARIO DE MADRUGADA BATCH (ALERTA NO RESTRICCIONAL)
-            else if (hora === 'nocturno') {
-                statusClass = 'warning';
-                passedRuns++; // Cuenta como exitoso pero con advertencia técnica de retraso
-                resultHTML = `
-                    <span class="status-badge badge-warning">Test Passed with Warning 🟡</span>
-                    <div class="test-title">Procesamiento Diferido — Alerta Fuera de Horario (Core Clearing)</div>
-                    <div class="test-details">
-                        [MÓDULO]: Cola de Mensajería Asíncrona ACH<br>
-                        [ESCENARIO]: Operación lanzada en ventana de mantenimiento nocturno.<br>
-                        [COMPORTAMIENTO]: El dinero se debitó de forma inmediata pero la liquidación queda en 'PENDIENTE' hasta las 08:30 AM.<br>
-                        [ESTADO]: 202 Accepted. Flujo diferido correcto.
-                    </div>
-                `;
-            } 
-            // 5. CASO FELIZ COMPLETADO: TODAS LAS REGLAS CONVERGEN PERFECTAMENTE
-            else {
-                statusClass = 'passed';
-                passedRuns++;
-                resultHTML = `
-                    <span class="status-badge badge-passed">Test Passed 🟢</span>
-                    <div class="test-title">Compensación Interbancaria Liquidada Exitosamente</div>
-                    <div class="test-details">
-                        [MÓDULO]: Liquidación Inmediata de Fondos (Real-Time Clearance)<br>
-                        [DATOS]: Banco: ${banco} | Cuenta ${tipoCuenta} (${moneda})<br>
-                        [COMPORTAMIENTO]: Envío procesado de forma transparente bajo protocolo de comunicación seguro.<br>
-                        [ESTADO]: HTTP 200 OK. Saldo de cuenta conciliado correctamente.
-                    </div>
-                `;
+            if (isSQLInjection || cuenta.includes('Error')) {
+                status = 'failed'; failed++;
+                apiJson = `{\n  "status": 400,\n  "error": "Bad Request",\n  "code": "ERR_SANITIZATION_FAILED",\n  "message": "Malicious characters or structural anomaly detected."\n}`;
+                title = `Fallo Estructural / Intento de Vulnerabilidad Criminal`;
+                description = `[SEVERIDAD]: CRITICAL 🔴\n[MÓDULO]: API Gateway Sanitizer\n[BUG]: Campo cci no cumple la máscara numérica u ofrece riesgo de inyección SQL.`;
+            } else if (cuenta.length !== 20) {
+                status = 'failed'; failed++;
+                apiJson = `{\n  "status": 422,\n  "error": "Unprocessable Entity",\n  "message": "CCI length must be exactly 20 digits."\n}`;
+                title = `Error de Entrada de Datos - Longitud Inválida`;
+                description = `[SEVERIDAD]: MAJOR 🟠\n[MÓDULO]: Account Number Validation Service\n[BUG]: Backend recibió longitud incorrecta (${cuenta.length} dígitos). Falta validación síncrona en cliente.`;
+            } else if (monto > 5000) {
+                status = 'failed'; failed++;
+                apiJson = `{\n  "status": 403,\n  "error": "Forbidden",\n  "code": "LIMIT_EXCEEDED"\n}`;
+                title = `Infracción Antifraude - Límite Excedido`;
+                description = `[SEVERIDAD]: HIGH 🔴\n[MÓDULO]: Risk Management Protocol\n[BUG]: Transacción de ${moneda} ${monto} fue procesada superando el techo máximo sin requerir Token OTP.`;
+            } else if (hora === 'nocturno') {
+                status = 'warning'; passed++;
+                apiJson = `{\n  "status": 202,\n  "response": "Accepted",\n  "mode": "Deferred_ACH"\n}`;
+                title = `Operación Aceptada - Procesamiento Diferido Nocturno`;
+                description = `[SEVERIDAD]: MINOR 🟡\n[MÓDULO]: Core Clearing Batch\n[LOG]: Operación correcta, pero entra en cola asíncrona por ventana de mantenimiento técnico.`;
+                persistInDatabase(banco, cuenta, monto, moneda, 'PENDING_BATCH');
+            } else {
+                status = 'passed'; passed++;
+                apiJson = `{\n  "status": 200,\n  "statusText": "OK",\n  "transactionId": "TX-${txIdCounter}"\n}`;
+                title = `Compensación Liquidada - 200 OK`;
+                description = `[SEVERIDAD]: NONE 🟢\n[MÓDULO]: Real-Time Clearance Core\n[LOG]: Fondos conciliados. Envío correcto al backend integrado de ${banco}.`;
+                persistInDatabase(banco, cuenta, monto, moneda, 'SUCCESS_COMPLETED');
             }
 
-            // CONTABILIZAR E INYECTAR EN TABLERO DE MÉTRICAS
-            totalRuns++;
-            document.getElementById('countTotal').innerText = totalRuns;
-            document.getElementById('countPassed').innerText = passedRuns;
-            document.getElementById('countFailed').innerText = failedRuns;
+            total++;
+            if(isAuto) automated++;
 
-            // ADICIÓN DE TARJETA DINÁMICA CON ATRIBUTO DE FILTRO
-            const testCard = document.createElement('div');
-            testCard.classList.add('test-item', statusClass);
-            testCard.setAttribute('data-status', statusClass);
-            testCard.innerHTML = resultHTML;
+            // ACTUALIZAR INTERFAZ METRICAS
+            document.getElementById('countTotal').innerText = total;
+            document.getElementById('countPassed').innerText = passed;
+            document.getElementById('countFailed').innerText = failed;
+            document.getElementById('countAuto').innerText = automated;
+
+            // CREAR LOG VISUAL DE API E INFORME
+            const card = document.createElement('div');
+            card.className = `test-item ${status}`;
+            card.setAttribute('data-status', status);
+            
+            let badgeText = status === 'passed' ? 'Test Passed 🟢' : (status === 'warning' ? 'Warning 🟡' : 'Test Failed 🔴');
+            let badgeClass = status === 'passed' ? 'badge-passed' : (status === 'warning' ? 'badge-warning' : 'badge-failed');
+
+            card.innerHTML = `
+                <span class="status-badge ${badgeClass}">${badgeText} ${isAuto ? '[AUTOMATED]' : '[MANUAL]'}</span>
+                <div class="test-title">${title}</div>
+                <div class="test-details" style="margin-bottom:8px;">${description.replace(/\n/g, '<br>')}</div>
+                <label style="font-size:10px; color:var(--accent);">MOCK API RESPONSE (JSON):</label>
+                <div class="test-details" style="color:#b5cea8; background:#000;">${apiJson.replace(/\n/g, '<br>').replace(/ /g, '&nbsp;')}</div>
+            `;
 
             const container = document.getElementById('testContainer');
-            container.insertBefore(testCard, container.firstChild);
+            container.insertBefore(card, container.firstChild);
+        }
 
-            document.getElementById('transferForm').reset();
+        // REGISTRO EN LA TABLA SQL
+        function persistInDatabase(banco, cuenta, monto, moneda, estadoDb) {
+            txIdCounter++;
+            const tbody = document.getElementById('dbTableBody');
+            
+            // Si es la primera fila, limpiar mensaje de vacía
+            if(total === 1 || tbody.innerText.includes('Tabla vacía')) {
+                tbody.innerHTML = '';
+            }
+
+            const tr = document.createElement('tr');
+            let colorEstado = estadoDb === 'SUCCESS_COMPLETED' ? 'var(--success)' : 'var(--warning)';
+            
+            tr.innerHTML = `
+                <td>TX-${txIdCounter}</td>
+                <td>${banco}</td>
+                <td>${cuenta.substring(0,6)}...${cuenta.substring(16,20)}</td>
+                <td>${monto}</td>
+                <td>${moneda}</td>
+                <td style="color:${colorEstado}; font-weight:bold;">${estadoDb}</td>
+            `;
+            tbody.insertBefore(tr, tbody.firstChild);
+        }
+
+        // EVENTO FORMULARIO
+        document.getElementById('transferForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            processTransaction(
+                document.getElementById('banco').value,
+                document.getElementById('tipoCuenta').value,
+                document.getElementById('cuenta').value,
+                parseFloat(document.getElementById('monto').value),
+                document.getElementById('moneda').value,
+                document.getElementById('horaEnvio').value,
+                false
+            );
+            this.reset();
         });
 
-        // FILTRADO DINÁMICO DE LOGS EN CLIENTE
-        function filterLogs(filterType) {
-            // Actualizar estado del botón activo
-            const buttons = document.querySelectorAll('.btn-filter');
-            buttons.forEach(btn => btn.classList.remove('active'));
+        // FILTRADO DE LOGS
+        function filterLogs(type) {
+            document.querySelectorAll('.btn-filter').forEach(b => b.classList.remove('active'));
             event.target.classList.add('active');
 
-            const items = document.querySelectorAll('.test-item');
-            items.forEach(item => {
-                const status = item.getAttribute('data-status');
-                if (filterType === 'all') {
-                    item.style.display = 'block';
-                } else if (filterType === 'passed' && (status === 'passed' || status === 'warning')) {
-                    item.style.display = 'block';
-                } else if (filterType === 'failed' && status === 'failed') {
-                    item.style.display = 'block';
-                } else {
-                    item.style.display = 'none';
-                }
+            document.querySelectorAll('.test-item').forEach(item => {
+                const s = item.getAttribute('data-status');
+                if(type === 'all') item.style.display = 'block';
+                else if(type === 'passed' && (s === 'passed' || s === 'warning')) item.style.display = 'block';
+                else if(type === 'failed' && s === 'failed') item.style.display = 'block';
+                else item.style.display = 'none';
             });
+        }
+
+        // SIMULADOR SCRIPT AUTOMATIZACIÓN (AUTOMATION CORE)
+        function runAutomationScript() {
+            const consoleBox = document.getElementById('automationConsole');
+            consoleBox.innerHTML = `[INFO] Inicializando Framework de Automatización...\n[INFO] Ejecutando: Suite_Regresion_Bancaria.spec.js\n[PLAYWRIGHT] Abriendo navegador Chromium en modo headless...`;
+            
+            setTimeout(() => {
+                consoleBox.innerHTML += `\n[TEST 1] Evaluando 'Caso Feliz BCP Soles'...\n  -> Rellenando CCI: 00219300458692514783\n  -> Monto: S/. 450.00\n  -> Resultado: HTTP 200 OK\n[STATUS] PASSED ✅`;
+                processTransaction('BCP', 'Ahorros', '00219300458692514783', 450, 'PEN', 'diurno', true);
+            }, 1000);
+
+            setTimeout(() => {
+                consoleBox.innerHTML += `\n\n[TEST 2] Evaluando 'Límite Antifraude Excedido BBVA'...\n  -> Rellenando CCI: 00311548796325418795\n  -> Monto: S/. 12000.00\n  -> Resultado: HTTP 403 Forbidden\n[STATUS] PASSED ✅ (Bug Capturado Correctamente)`;
+                processTransaction('BBVA', 'Corriente', '00311548796325418795', 12000, 'PEN', 'diurno', true);
+            }, 2200);
+
+            setTimeout(() => {
+                consoleBox.innerHTML += `\n\n[TEST 3] Evaluando 'Fallo Estructural de Entrada'...\n  -> Rellenando CCI: 4589-Error\n  -> Monto: S/. 10.00\n  -> Resultado: HTTP 400 Bad Request\n[STATUS] PASSED ✅ (Excepción Controlada)`;
+                processTransaction('Interbank', 'Ahorros', '4589-Error', 10, 'PEN', 'diurno', true);
+                consoleBox.innerHTML += `\n\n[SUCCESS] Suite completada. 3/3 Tests Ejecutados.`;
+            }, 3500);
         }
     </script>
 </body>
