@@ -11,86 +11,60 @@
 --cyan-accent: #48cae4;
 --text-light: #ffffff;
 --text-muted: #a5a5a5;
-
 --success: #06d6a0;
 --danger: #ef476f;
 --warning: #ffd166;
 }
-* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva,
-Verdana, sans-serif; }
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
 body { background-color: var(--bg-main); color: var(--text-light); padding: 20px; }
-header { text-align: center; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px
-solid #3a506b; }
+header { text-align: center; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid #3a506b; }
 header h1 { color: var(--cyan-accent); font-size: 26px; }
 header p { color: var(--text-muted); font-size: 14px; margin-top: 5px; }
 nav { display: flex; justify-content: center; gap: 15px; margin-bottom: 25px; }
-nav button { background-color: var(--bg-card); border: 1px solid #3a506b; color:
-var(--text-light); padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold;
-transition: 0.3s; }
-nav button.active, nav button:hover { background-color: var(--cyan-accent); color:
-var(--bg-main); border-color: var(--cyan-accent); }
+nav button { background-color: var(--bg-card); border: 1px solid #3a506b; color: var(--text-light); padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+nav button.active, nav button:hover { background-color: var(--cyan-accent); color: var(--bg-main); border-color: var(--cyan-accent); }
 .page { display: none; animation: fadeIn 0.4s ease-in-out forwards; }
 .page.active { display: block; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1;
-transform: translateY(0); } }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 .grid-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 @media(max-width: 768px) { .grid-layout { grid-template-columns: 1fr; } }
-.card { background-color: var(--bg-card); border-radius: 8px; padding: 20px; border: 1px solid
-#2a3c5a; height: fit-content; }
-.card h2 { font-size: 18px; color: var(--cyan-accent); margin-bottom: 15px; border-bottom: 1px
-solid #2a3c5a; padding-bottom: 8px; }
+.card { background-color: var(--bg-card); border-radius: 8px; padding: 20px; border: 1px solid #2a3c5a; height: fit-content; }
+.card h2 { font-size: 18px; color: var(--cyan-accent); margin-bottom: 15px; border-bottom: 1px solid #2a3c5a; padding-bottom: 8px; }
 .form-group { margin-bottom: 15px; }
-.form-group label { display: block; font-size: 13px; color: var(--text-muted); margin-bottom:
-5px; }
-.form-group input, .form-group select { width: 100%; padding: 10px; border-radius: 6px; border:
-1px solid #3a506b; background-color: var(--bg-main); color: var(--text-light); font-size: 14px; }
-.form-group input:focus, .form-group select:focus { border-color: var(--cyan-accent); outline:
-none; }
-.btn-primary { width: 100%; background-color: var(--success); color: var(--bg-main);
-font-weight: bold; border: none; padding: 12px; border-radius: 6px; cursor: pointer; font-size: 15px;
-transition: 0.2s; }
+.form-group label { display: block; font-size: 13px; color: var(--text-muted); margin-bottom: 5px; }
+.form-group input, .form-group select { width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #3a506b; background-color: var(--bg-main); color: var(--text-light); font-size: 14px; }
+.form-group input:focus, .form-group select:focus { border-color: var(--cyan-accent); outline: none; }
+.btn-primary { width: 100%; background-color: var(--success); color: var(--bg-main); font-weight: bold; border: none; padding: 12px; border-radius: 6px; cursor: pointer; font-size: 15px; transition: 0.2s; }
 .btn-primary:hover { opacity: 0.9; }
 .datapool-buttons { display: flex; gap: 10px; margin-bottom: 15px; }
-.datapool-buttons button { flex: 1; background-color: #2a3c5a; border: none; color:
-var(--text-light); padding: 8px; border-radius: 4px; font-size: 11px; cursor: pointer; font-weight:
-bold; }
+.datapool-buttons button { flex: 1; background-color: #2a3c5a; border: none; color: var(--text-light); padding: 8px; border-radius: 4px; font-size: 11px; cursor: pointer; font-weight: bold; }
 .datapool-buttons button:hover { background-color: #3a506b; }
-.log-container { background-color: var(--bg-main); border-radius: 6px; padding: 15px;
-min-height: 250px; max-height: 400px; overflow-y: auto; font-family: monospace; font-size: 13px;
-border: 1px solid #2a3c5a; }
+.log-container { background-color: var(--bg-main); border-radius: 6px; padding: 15px; min-height: 250px; max-height: 400px; overflow-y: auto; font-family: monospace; font-size: 13px; border: 1px solid #2a3c5a; }
 .log-card { padding: 10px; border-radius: 4px; margin-bottom: 10px; border-left: 4px solid; }
-.log-card.passed { background-color: rgba(6, 214, 160, 0.1); border-left-color: var(--success);
-
-color: #06d6a0; }
-.log-card.failed { background-color: rgba(239, 71, 111, 0.1); border-left-color: var(--danger);
-color: #ef476f; }
-.log-card.deferred { background-color: rgba(255, 209, 102, 0.1); border-left-color:
-var(--warning); color: #ffd166; }
+.log-card.passed { background-color: rgba(6, 214, 160, 0.1); border-left-color: var(--success); color: #06d6a0; }
+.log-card.failed { background-color: rgba(239, 71, 111, 0.1); border-left-color: var(--danger); color: #ef476f; }
+.log-card.deferred { background-color: rgba(255, 209, 102, 0.1); border-left-color: var(--warning); color: #ffd166; }
 table.db-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 12px; }
-table.db-table th, table.db-table td { border: 1px solid #3a506b; padding: 8px; text-align:
-left; }
+table.db-table th, table.db-table td { border: 1px solid #3a506b; padding: 8px; text-align: left; }
 table.db-table th { background-color: #2a3c5a; color: var(--cyan-accent); }
-.sql-console { background-color: #050a14; border: 1px solid #1f4e79; padding: 15px;
-border-radius: 6px; font-family: monospace; }
-.sql-console textarea { width: 100%; height: 70px; background-color: #111; color: #00ff00;
-border: 1px solid #3a506b; padding: 10px; font-family: monospace; resize: none; border-radius: 4px; }
-.btn-sql { background-color: var(--cyan-accent); color: var(--bg-main); border: none; padding:
-8px 15px; font-weight: bold; border-radius: 4px; cursor: pointer; margin-top: 8px; font-size: 12px; }
+.sql-console { background-color: #050a14; border: 1px solid #1f4e79; padding: 15px; border-radius: 6px; font-family: monospace; }
+.sql-console textarea { width: 100%; height: 70px; background-color: #111; color: #00ff00; border: 1px solid #3a506b; padding: 10px; font-family: monospace; resize: none; border-radius: 4px; }
+.btn-sql { background-color: var(--cyan-accent); color: var(--bg-main); border: none; padding: 8px 15px; font-weight: bold; border-radius: 4px; cursor: pointer; margin-top: 8px; font-size: 12px; }
 </style>
 </head>
 <body>
+
 <header>
 <h1>Ecosystem de Entrenamiento QA Bancario v4.0</h1>
-<p>Dominio de Lógica de Negocio, Consultas SQL Avanzadas y Simulación de Automatización de
-Pruebas</p>
+<p>Dominio de Lógica de Negocio, Consultas SQL Avanzadas y Simulación de Automatización de Pruebas</p>
 </header>
+
 <nav>
-<button id="nav-manual" class="active" onclick="switchPage('manual')">1. QA Manual &
-Requerimientos</button>
+<button id="nav-manual" class="active" onclick="switchPage('manual')">1. QA Manual & Requerimientos</button>
 <button id="nav-sql" onclick="switchPage('sql')">2. Consola de Base de Datos (SQL)</button>
 <button id="nav-auto" onclick="switchPage('auto')">3. Panel de Automatización</button>
 </nav>
-<!-- PÁGINA 1: QA MANUAL -->
+
 <div id="page-manual" class="page active">
 <div class="grid-layout">
 <div class="card">
@@ -106,15 +80,11 @@ Requerimientos</button>
 </div>
 <div class="form-group">
 <label>Código de Cuenta Interbancario (CCI - 20 dígitos):</label>
-<input type="text" id="m-cci" placeholder="Ingrese la cadena de prueba a mano"
-
-required>
-
+<input type="text" id="m-cci" placeholder="Ingrese la cadena de prueba a mano" required>
 </div>
 <div class="form-group">
 <label>Monto Transaccional (PEN):</label>
 <input type="number" step="0.01" id="m-monto" placeholder="0.00" required>
-
 </div>
 <div class="form-group">
 <label>Timestamp de Simulación (Hora del Sistema):</label>
@@ -123,80 +93,52 @@ required>
 <option value="Nocturno">Horario Nocturno (18:01 - 08:59)</option>
 </select>
 </div>
-<button type="submit" class="btn-primary">Inyectar Transacción al Core Engine
-
-🚀</button>
-
+<button type="submit" class="btn-primary">Inyectar Transacción al Core Engine 🚀</button>
 </form>
 </div>
 <div class="card">
 <h2>Historial de Auditoría Interna (Logs Manuales)</h2>
 <div id="logs-manual" class="log-container">
-<span style="color: var(--text-muted);">Consola vacía. Ingrese datos manualmente a
+<span style="color: var(--text-muted);">Consola vacía. Ingrese datos manualmente a la izquierda y presione Inyectar para evaluar reglas de negocio.</span>
+</div>
+</div>
+</div>
+</div>
 
-la izquierda y presione Inyectar para evaluar reglas de negocio.</span>
-
-</div>
-</div>
-</div>
-</div>
-<!-- PÁGINA 2: BASE DE DATOS SQL -->
 <div id="page-sql" class="page">
 <div class="grid-layout">
 <div class="card">
 <h2>Consola Interactiva SQL / Oracle Client</h2>
 <div class="sql-console">
-<p style="color: #00ff00; font-size: 11px; margin-bottom: 5px;">-- Conectado a
-
-schema: CORE_BANKING_PROD</p>
-
-<textarea id="sql-input" placeholder="Escribe tu sentencia SQL aquí (Ej: SELECT *
-
-FROM CUENTAS;)">SELECT * FROM CUENTAS;</textarea>
-
+<p style="color: #00ff00; font-size: 11px; margin-bottom: 5px;">-- Conectado a schema: CORE_BANKING_PROD</p>
+<textarea id="sql-input" placeholder="Escribe tu sentencia SQL aquí (Ej: SELECT * FROM CUENTAS;)">SELECT * FROM CUENTAS;</textarea>
 <button class="btn-sql" onclick="runSQL()">Execute Query [F5]</button>
 </div>
 <div style="margin-top: 15px; font-size: 13px;">
 <p><strong>Tablas Disponibles:</strong></p>
 <ul style="margin-left: 20px; color: var(--cyan-accent); margin-top: 5px;">
 <li><code>CUENTAS</code> (Campos: CCI, SALDO, ESTADO, TITULAR)</li>
-<li><code>LOG_TRANSACCIONES</code> (Campos: ID, CCI, MONTO, ESTADO_HTTP,
-
-MENSAJE)</li>
-
+<li><code>LOG_TRANSACCIONES</code> (Campos: ID, CCI, MONTO, ESTADO_HTTP, MENSAJE)</li>
 </ul>
 </div>
 </div>
 <div class="card">
 <h2>Data Viewer (Resultado de Consulta SQL)</h2>
 <div id="sql-output" style="overflow-x: auto;">
-<span style="color: var(--text-muted);">Ejecuta una consulta SQL para mapear los
+<span style="color: var(--text-muted);">Ejecuta una consulta SQL para mapear los registros actuales de las tablas del Core.</span>
+</div>
+</div>
+</div>
+</div>
 
-registros actuales de las tablas del Core.</span>
-
-</div>
-</div>
-</layout>
-</div>
-<!-- PÁGINA 3: QA AUTOMATION -->
 <div id="page-auto" class="page">
 <div class="grid-layout">
-
 <div class="card">
 <h2>Data Pool Automatizado (Generador de Carga)</h2>
 <div class="datapool-buttons">
-<button onclick="loadDataPool('feliz')" style="border-bottom: 3px solid
-
-var(--success);">⚡ Cargar Caso Feliz</button>
-
-<button onclick="loadDataPool('bug')" style="border-bottom: 3px solid
-
-var(--danger);">⚠️ Forzar Bug CCI</button>
-
-<button onclick="loadDataPool('limite')" style="border-bottom: 3px solid
-
-var(--warning);">🔥 Cargar Ataque Límite</button>
-
+<button onclick="loadDataPool('feliz')" style="border-bottom: 3px solid var(--success);">⚡ Cargar Caso Feliz</button>
+<button onclick="loadDataPool('bug')" style="border-bottom: 3px solid var(--danger);">⚠️ Forzar Bug CCI</button>
+<button onclick="loadDataPool('limite')" style="border-bottom: 3px solid var(--warning);">🔥 Cargar Ataque Límite</button>
 </div>
 <form id="form-auto" onsubmit="executeTest(event, 'Automation')">
 <div class="form-group">
@@ -207,64 +149,41 @@ var(--warning);">🔥 Cargar Ataque Límite</button>
 </div>
 <div class="form-group">
 <label>CCI Inyectado por Script Automatizado:</label>
-<input type="text" id="a-cci" readonly style="background-color: #151d33;
-
-border-color: #2a3c5a; color: var(--cyan-accent);">
-
+<input type="text" id="a-cci" readonly style="background-color: #151d33; border-color: #2a3c5a; color: var(--cyan-accent);">
 </div>
 <div class="form-group">
 <label>Monto Asignado por DataPool:</label>
-<input type="number" id="a-monto" readonly style="background-color: #151d33;
-
-border-color: #2a3c5a; color: var(--cyan-accent);">
-
+<input type="number" id="a-monto" readonly style="background-color: #151d33; border-color: #2a3c5a; color: var(--cyan-accent);">
 </div>
 <div class="form-group">
 <label>Simulación de Entorno:</label>
-<input type="text" value="PLAYWRIGHT_CHROME_HEADLESS" readonly
-style="background-color: #151d33; border-color: #2a3c5a; font-family: monospace; color:
-var(--warning);">
+<input type="text" value="PLAYWRIGHT_CHROME_HEADLESS" readonly style="background-color: #151d33; border-color: #2a3c5a; font-family: monospace; color: var(--warning);">
 </div>
-<button type="submit" class="btn-primary" style="background-color:
-
-var(--cyan-accent);">Inyectar Suite Automatizada 🤖</button>
-
+<button type="submit" class="btn-primary" style="background-color: var(--cyan-accent);">Inyectar Suite Automatizada 🤖</button>
 </form>
 </div>
 <div class="card">
 <h2>Consola de Automatización (Logs Funcionales)</h2>
 <div id="logs-auto" class="log-container">
-<span style="color: var(--text-muted);">Consola de automatización vacía. Seleccione
+<span style="color: var(--text-muted);">Consola de automatización vacía. Seleccione un Data Pool superior y ejecute la suite corporativa.</span>
+</div>
+</div>
+</div>
+</div>
 
-un Data Pool superior y ejecute la suite corporativa.</span>
-
-</div>
-</div>
-</div>
-</div>
 <script>
-// BASE DE DATOS SIMULADA EN MEMORIA (DICCIONARIO DE OBJETOS)
+// BASE DE DATOS SIMULADA EN MEMORIA
 let BASE_DATOS = {
 "CUENTAS": [
-{ CCI: "00319300321456789012", SALDO: 12500.00, ESTADO: "ACTIVA", TITULAR: "Jannett
-
-Toledo C." },
-
-{ CCI: "01123400987654321098", SALDO: 450.00, ESTADO: "ACTIVA", TITULAR: "Alexander M."
-
-},
-
-{ CCI: "00298700123456789012", SALDO: 8900.00, ESTADO: "BLOQUEADA", TITULAR: "Cuenta
-
-Sospechosa Lima" }
+{ CCI: "00319300321456789012", SALDO: 12500.00, ESTADO: "ACTIVA", TITULAR: "Jannett Sheyla Toledo Castro" },
+{ CCI: "01123400987654321098", SALDO: 450.00, ESTADO: "ACTIVA", TITULAR: "Alexander M." },
+{ CCI: "00298700123456789012", SALDO: 8900.00, ESTADO: "BLOQUEADA", TITULAR: "Cuenta Sospechosa Lima" }
 ],
 "LOG_TRANSACCIONES": [
-{ ID: 101, CCI: "00319300321456789012", MONTO: 150.00, ESTADO_HTTP: "200 OK", MENSAJE:
-
-"Validación Exitosa Core Inicial" }
-
+{ ID: 101, CCI: "00319300321456789012", MONTO: 150.00, ESTADO_HTTP: "200 OK", MENSAJE: "Validación Exitosa Core Inicial" }
 ]
 };
+
 function switchPage(pageName) {
 document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
 document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
@@ -272,6 +191,7 @@ document.getElementById('page-' + pageName).classList.add('active');
 document.getElementById('nav-' + pageName).classList.add('active');
 if(pageName === 'sql') runSQL();
 }
+
 function loadDataPool(caseType) {
 if(caseType === 'feliz') {
 document.getElementById('a-cci').value = "00319300321456789012";
@@ -284,181 +204,98 @@ document.getElementById('a-cci').value = "00319300321456789012";
 document.getElementById('a-monto').value = "7500";
 }
 }
+
 function executeTest(e, scope) {
 e.preventDefault();
-let cci = (scope === 'Manual') ? document.getElementById('m-cci').value :
-
-document.getElementById('a-cci').value;
-
-let monto = parseFloat((scope === 'Manual') ? document.getElementById('m-monto').value :
-
-document.getElementById('a-monto').value);
-
+let cci = (scope === 'Manual') ? document.getElementById('m-cci').value : document.getElementById('a-cci').value;
+let monto = parseFloat((scope === 'Manual') ? document.getElementById('m-monto').value : document.getElementById('a-monto').value);
 let hora = (scope === 'Manual') ? document.getElementById('m-hora').value : "Habil";
-let banco = (scope === 'Manual') ? document.getElementById('m-banco').value :
+let banco = (scope === 'Manual') ? document.getElementById('m-banco').value : document.getElementById('a-banco').value;
+let logContainer = (scope === 'Manual') ? document.getElementById('logs-manual') : document.getElementById('logs-auto');
 
-document.getElementById('a-banco').value;
-
-let logContainer = (scope === 'Manual') ? document.getElementById('logs-manual') :
-
-document.getElementById('logs-auto');
-
-if(logContainer.innerHTML.includes("Consola vacía") ||
-
-logContainer.innerHTML.includes("Consola de automatización")) logContainer.innerHTML = "";
+if(logContainer.innerHTML.includes("Consola vacía") || logContainer.innerHTML.includes("Consola de automatización")) {
+logContainer.innerHTML = "";
+}
 
 let timestamp = new Date().toLocaleTimeString();
 let nId = Math.floor(Math.random() * 900) + 100;
-// --- MOTOR DE LÓGICA Y REGLAS DE NEGOCIO (LOGIC ENGINE) ---
-// Regela 1: Validación Estructural de Longitud del CCI
+
+// Regla 1: Validación Estructural del CCI
 if (cci.length !== 20 || isNaN(cci)) {
-let msg = `[${timestamp}] TX-${nId} RECHAZADA por Core. Motivo: Error estructural de
-Cuenta CCI. Longitud: ${cci.length} dígitos (Requerido: 20 numéricos). HTTP 400 Bad Request.`;
-logContainer.innerHTML = `<div class="log-card failed"><strong>TEST FAILED
-
-🔴</strong><br>${msg}</div>` + logContainer.innerHTML;
-
-BASE_DATOS.LOG_TRANSACCIONES.push({ ID: nId, CCI: cci, MONTO: monto, ESTADO_HTTP: "400
-
-Bad Request", MENSAJE: "Error de Estructura CCI" });
-
+let msg = `[${timestamp}] TX-${nId} RECHAZADA por Core. Motivo: Error estructural de Cuenta CCI. Longitud: ${cci.length} dígitos (Requerido: 20 numéricos). HTTP 400 Bad Request.`;
+logContainer.innerHTML = `<div class="log-card failed"><strong>TEST FAILED 🔴</strong><br>${msg}</div>` + logContainer.innerHTML;
+BASE_DATOS.LOG_TRANSACCIONES.push({ ID: nId, CCI: cci, MONTO: monto, ESTADO_HTTP: "400 Bad Request", MENSAJE: "Error de Estructura CCI" });
 return;
 }
-// Buscar la cuenta en nuestra base de datos simulada
+
+// Buscar la cuenta
 let cuentaEncontrada = BASE_DATOS.CUENTAS.find(c => c.CCI === cci);
+
 // Regla 2: Validación de Cuenta Bloqueada
 if (cuentaEncontrada && cuentaEncontrada.ESTADO === "BLOQUEADA") {
-let msg = `[${timestamp}] TX-${nId} RECHAZADA. Alerta: La cuenta destino se encuentra
-
-'BLOQUEADA' por el departamento de Riesgos y Lavado de Activos. HTTP 403 Forbidden.`;
-logContainer.innerHTML = `<div class="log-card failed"><strong>TEST FAILED 🔴
-
-(Seguridad)</strong><br>${msg}</div>` + logContainer.innerHTML;
-
-BASE_DATOS.LOG_TRANSACCIONES.push({ ID: nId, CCI: cci, MONTO: monto, ESTADO_HTTP: "403
-
-Forbidden", MENSAJE: "Cuenta de destino Bloqueada" });
-
+let msg = `[${timestamp}] TX-${nId} RECHAZADA. Alerta: La cuenta destino se encuentra 'BLOQUEADA' por Riesgos. HTTP 403 Forbidden.`;
+logContainer.innerHTML = `<div class="log-card failed"><strong>TEST FAILED 🔴 (Seguridad)</strong><br>${msg}</div>` + logContainer.innerHTML;
+BASE_DATOS.LOG_TRANSACCIONES.push({ ID: nId, CCI: cci, MONTO: monto, ESTADO_HTTP: "403 Forbidden", MENSAJE: "Cuenta de destino Bloqueada" });
 return;
 }
-// Regla 3: Control Preventivo de Fraude (Límite Diario de 5000)
+
+// Regla 3: Control Preventivo de Fraude (Límite 5000)
 if (monto > 5000) {
-let msg = `[${timestamp}] TX-${nId} RECHAZADA. Error: El monto inyectado (${monto} PEN)
-supera el límite máximo permitido por transacción (5,000.00 PEN). HTTP 422 Unprocessable Entity.`;
-logContainer.innerHTML = `<div class="log-card failed"><strong>TEST FAILED 🔴 (Límite
-
-Diario Excedido)</strong><br>${msg}</div>` + logContainer.innerHTML;
-
-BASE_DATOS.LOG_TRANSACCIONES.push({ ID: nId, CCI: cci, MONTO: monto, ESTADO_HTTP: "422
-
-Unprocessable Entity", MENSAJE: "Excede límite de fraude de 5K" });
-
+let msg = `[${timestamp}] TX-${nId} RECHAZADA. Error: El monto (${monto} PEN) supera el límite máximo permitido por transacción (5,000.00 PEN). HTTP 422 Unprocessable Entity.`;
+logContainer.innerHTML = `<div class="log-card failed"><strong>TEST FAILED 🔴 (Límite Excedido)</strong><br>${msg}</div>` + logContainer.innerHTML;
+BASE_DATOS.LOG_TRANSACCIONES.push({ ID: nId, CCI: cci, MONTO: monto, ESTADO_HTTP: "422 Unprocessable Entity", MENSAJE: "Excede límite de fraude de 5K" });
 return;
 }
-// Regla 4: Lógica de Negocio según Horario
+
+// Regla 4: Horario Nocturno
 if (hora === "Nocturno") {
-let msg = `[${timestamp}] TX-${nId} DETECTADA. Estado: Procesamiento Diferidó (Cámara
-de Compensación CCE Cerrada). La transacción se completará a las 09:00 AM. HTTP 202 Accepted.`;
-logContainer.innerHTML = `<div class="log-card deferred"><strong>TEST DEFERRED
-
-🟡</strong><br>${msg}</div>` + logContainer.innerHTML;
-
-BASE_DATOS.LOG_TRANSACCIONES.push({ ID: nId, CCI: cci, MONTO: monto, ESTADO_HTTP: "202
-
-Accepted", MENSAJE: "Procesamiento Nocturno Diferido" });
-
+let msg = `[${timestamp}] TX-${nId} DETECTADA. Estado: Procesamiento Diferido (Cámara CCE Cerrada). Se completará a las 09:00 AM. HTTP 202 Accepted.`;
+logContainer.innerHTML = `<div class="log-card deferred"><strong>TEST DEFERRED 🟡</strong><br>${msg}</div>` + logContainer.innerHTML;
+BASE_DATOS.LOG_TRANSACCIONES.push({ ID: nId, CCI: cci, MONTO: monto, ESTADO_HTTP: "202 Accepted", MENSAJE: "Procesamiento Nocturno Diferido" });
 } else {
 // Caso Feliz
-let msg = `[${timestamp}] TX-${nId} EXITOSA en ${banco}. Cuenta destino: ${cci}. Monto:
-
-${monto} PEN. Código de Respuesta: HTTP 200 OK. Conciliación en línea completada.`;
-logContainer.innerHTML = `<div class="log-card passed"><strong>TEST PASSED
-
-🟢</strong><br>${msg}</div>` + logContainer.innerHTML;
-
-// Actualizar saldo si la cuenta origen simulada es la primera de la BD
+let msg = `[${timestamp}] TX-${nId} EXITOSA en ${banco}. Cuenta destino: ${cci}. Monto: ${monto} PEN. HTTP 200 OK.`;
+logContainer.innerHTML = `<div class="log-card passed"><strong>TEST PASSED 🟢</strong><br>${msg}</div>` + logContainer.innerHTML;
 if(cuentaEncontrada) {
 cuentaEncontrada.SALDO += monto;
 }
-BASE_DATOS.LOG_TRANSACCIONES.push({ ID: nId, CCI: cci, MONTO: monto, ESTADO_HTTP: "200
-
-OK", MENSAJE: "Transferencia Interbancaria Exitosa" });
-
+BASE_DATOS.LOG_TRANSACCIONES.push({ ID: nId, CCI: cci, MONTO: monto, ESTADO_HTTP: "200 OK", MENSAJE: "Transferencia Interbancaria Exitosa" });
 }
 }
-// MOTOR DE CONSULTAS SQL SIMULADO (SQL ENGINE)
+
+// MOTOR DE CONSULTAS SQL
 function runSQL() {
 let sql = document.getElementById('sql-input').value.trim().toUpperCase();
 let output = document.getElementById('sql-output');
 
 if (sql.includes("SELECT * FROM CUENTAS")) {
-let html = ``;
+let html = `<table class="db-table"><thead><tr><th>CCI</th><th>SALDO (PEN)</th><th>ESTADO</th><th>TITULAR</th></tr></thead><tbody>`;
 BASE_DATOS.CUENTAS.forEach(c => {
-html += ``;
+html += `<tr><td>${c.CCI}</td><td>${c.SALDO.toFixed(2)}</td><td>${c.ESTADO}</td><td>${c.TITULAR}</td></tr>`;
 });
-html += `
-
-CCI SALDO (PEN) ESTADO TITULAR
-
-${c.CCI} ${c.SALDO.toFixed
-
-(2)}
-
-${c.ESTADO} ${c.TITULAR}
-
-`;
-
+html += `</tbody></table>`;
 output.innerHTML = html;
 } else if (sql.includes("SELECT * FROM LOG_TRANSACCIONES")) {
 if(BASE_DATOS.LOG_TRANSACCIONES.length === 0) {
-output.innerHTML = `Query Ok. Empty Set (0 registros grabados). Inyecta
-
-transacciones en la pestaña de QA primero.`;
-
+output.innerHTML = `Query Ok. Empty Set (0 registros).`;
 return;
 }
-let html = ``;
+let html = `<table class="db-table"><thead><tr><th>ID</th><th>CCI</th><th>MONTO</th><th>ESTADO_HTTP</th><th>MENSAJE</th></tr></thead><tbody>`;
 BASE_DATOS.LOG_TRANSACCIONES.forEach(l => {
-html += ``;
+html += `<tr><td>${l.ID}</td><td>${l.CCI}</td><td>${l.MONTO}</td><td>${l.ESTADO_HTTP}</td><td>${l.MENSAJE}</td></tr>`;
 });
-html += `
-
-ID CCI MONTO ESTADO_HTTP MENSAJE
-${l.ID} ${l.CCI} ${l.MONTO} ${l.ESTADO_HT
-
-TP}
-
-${l.MENSAJE}
-
-`;
-
+html += `</tbody></table>`;
 output.innerHTML = html;
 } else if (sql.includes("UPDATE CUENTAS SET ESTADO = 'BLOQUEADA'")) {
-BASE_DATOS.CUENTAS.forEach(c => { if(c.CCI.includes("011234")) c.ESTADO = 'BLOQUEADA';
-
-});
-
-output.innerHTML = `Query OK, 1 row affected. Cuenta de Alexander M. fue BLOQUEADA con
-
-éxito.`;
-
+BASE_DATOS.CUENTAS.forEach(c => { if(c.CCI.includes("011234")) c.ESTADO = 'BLOQUEADA'; });
+output.innerHTML = `Query OK, 1 row affected. Cuenta de Alexander M. fue BLOQUEADA con éxito.`;
 } else if (sql.includes("UPDATE CUENTAS SET SALDO =")) {
 BASE_DATOS.CUENTAS[0].SALDO = 20000;
-output.innerHTML = `Query OK, 1 row affected. Saldo modificado artificialmente para
-
-pruebas.`;
-
+output.innerHTML = `Query OK, 1 row affected. Saldo modificado artificialmente.`;
 } else {
-output.innerHTML = `🚨 SQL ERROR: Sintaxis no soportada en este entorno de práctica.
-
-Prueba con consultas estándar permitidas como:
-• SELECT * FROM CUENTAS;
-• SELECT * FROM LOG_TRANSACCIONES;
-
-• UPDATE CUENTAS SET ESTADO = 'BLOQUEADA' WHERE CCI = '01123400987654321098';`;
-
+output.innerHTML = `🚨 SQL ERROR: Sintaxis no soportada.<br>Prueba con:<br>• SELECT * FROM CUENTAS;<br>• SELECT * FROM LOG_TRANSACCIONES;`;
 }
 }
-</style>
+</script>
 </body>
 </html>
